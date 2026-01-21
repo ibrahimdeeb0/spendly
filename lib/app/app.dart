@@ -6,29 +6,24 @@ class ExpenseTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => sl<ThemeCubit>()..load()),
-        BlocProvider(create: (_) => sl<LocaleCubit>()..load()),
-        BlocProvider(create: (_) => sl<CurrencyCubit>()..load()),
-      ],
-      child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, themeState) {
-          return BlocBuilder<LocaleCubit, LocaleState>(
-            builder: (context, localeState) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                locale: localeState.locale,
-                supportedLocales: L10n.supportedLocales,
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                theme: themeState.themeData,
-                onGenerateRoute: AppRouter.onGenerateRoute,
-              );
-            },
+    return BlocProvider(
+      create: (_) => sl<SettingsCubit>()..load(),
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          final theme = state.isDark ? AppTheme.dark() : AppTheme.light();
+          final locale = Locale(state.locale);
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            locale: locale,
+            supportedLocales: L10n.supportedLocales,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: theme,
+            onGenerateRoute: AppRouter.onGenerateRoute,
           );
         },
       ),

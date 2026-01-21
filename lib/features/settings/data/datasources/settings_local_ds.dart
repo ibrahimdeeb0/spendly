@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import '../../core/constants/hive_keys.dart';
+import '../../../../core/constants/hive_keys.dart';
 
 class SettingsLocalDataSource {
   Future<Box> _open() => Hive.openBox(HiveBoxes.settings);
