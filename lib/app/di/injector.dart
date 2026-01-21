@@ -5,15 +5,18 @@ import '../../general_exports.dart';
 final sl = GetIt.instance;
 
 Future<void> configureDependencies() async {
-  // Data sources
+  // Settings - data
   sl.registerLazySingleton<SettingsLocalDataSource>(
     () => SettingsLocalDataSource(),
   );
+  sl.registerLazySingleton<SettingsRepo>(() => SettingsRepoImpl(sl()));
 
-  // Cubits
-  sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit(sl()));
-  sl.registerLazySingleton<LocaleCubit>(() => LocaleCubit(sl()));
-  sl.registerLazySingleton<CurrencyCubit>(() => CurrencyCubit(sl()));
+  // Settings - usecases
+  sl.registerLazySingleton(() => GetSettingsUseCase(sl()));
+  sl.registerLazySingleton(() => SetThemeModeUseCase(sl()));
+  sl.registerLazySingleton(() => SetLocaleUseCase(sl()));
+  sl.registerLazySingleton(() => SetCurrencyUseCase(sl()));
 
-  // datasources / repositories / usecases
+  // Settings - cubit
+  sl.registerFactory(() => SettingsCubit(sl(), sl(), sl(), sl()));
 }
