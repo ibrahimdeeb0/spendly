@@ -13,89 +13,84 @@ class SettingsPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              _SectionCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'العملة',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: context.contentMaxWidth),
+              child: ListView(
+                padding: context.pagePadding,
+                children: [
+                  _SectionCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: _CurrencyBtn(
-                            label: r'$',
-                            isSelected: state.currency == 'USD',
-                            onTap: () => context
-                                .read<SettingsCubit>()
-                                .setCurrency('USD'),
-                          ),
+                        Text(
+                          'العملة',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: _CurrencyBtn(
-                            label: '₪',
-                            isSelected: state.currency == 'ILS',
-                            onTap: () => context
-                                .read<SettingsCubit>()
-                                .setCurrency('ILS'),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: _CurrencyBtn(
-                            label: 'ريال',
-                            isSelected: state.currency == 'SAR',
-                            onTap: () => context
-                                .read<SettingsCubit>()
-                                .setCurrency('SAR'),
-                          ),
+                        SizedBox(height: context.tokens.s12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _CurrencyBtn(
+                                label: r'$',
+                                isSelected: state.currency == 'USD',
+                                onTap: () => context
+                                    .read<SettingsCubit>()
+                                    .setCurrency('USD'),
+                              ),
+                            ),
+                            SizedBox(width: context.tokens.s12),
+                            Expanded(
+                              child: _CurrencyBtn(
+                                label: '₪',
+                                isSelected: state.currency == 'ILS',
+                                onTap: () => context
+                                    .read<SettingsCubit>()
+                                    .setCurrency('ILS'),
+                              ),
+                            ),
+                            SizedBox(width: context.tokens.s12),
+                            Expanded(
+                              child: _CurrencyBtn(
+                                label: 'ريال',
+                                isSelected: state.currency == 'SAR',
+                                onTap: () => context
+                                    .read<SettingsCubit>()
+                                    .setCurrency('SAR'),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              _SectionCard(
-                child: SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    'الوضع الليلي',
-                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  value: state.isDark,
-                  onChanged: (_) => context.read<SettingsCubit>().toggleTheme(),
-                ),
-              ),
-              const SizedBox(height: 12),
-              _DangerCard(
-                title: 'تصفير البيانات',
-                subtitle: 'سيتم حذف جميع المصاريف المسجلة بشكل نهائي',
-                buttonText: 'حذف جميع المصاريف',
-                onTap: () {
-                  // TODO: Wire this after expenses feature is ready.
-                },
-              ),
-              const SizedBox(height: 32),
-              Center(
-                child: Column(
-                  children: const [
-                    Text(
-                      'تطبيق تتبع المصروفات',
-                      style: TextStyle(color: Colors.grey),
+                  SizedBox(height: context.tokens.s12),
+                  _SectionCard(
+                    child: SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'الوضع الليلي',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      value: state.isDark,
+                      onChanged: (_) =>
+                          context.read<SettingsCubit>().toggleTheme(),
                     ),
-                    SizedBox(height: 6),
-                    Text('الإصدار 1.0.0', style: TextStyle(color: Colors.grey)),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: context.tokens.s12),
+                  _DangerCard(
+                    title: 'تصفير البيانات',
+                    subtitle: 'سيتم حذف جميع المصاريف المسجلة بشكل نهائي',
+                    buttonText: 'حذف جميع المصاريف',
+                    onTap: () {
+                      // TODO: Wire this after expenses feature is ready.
+                    },
+                  ),
+                  SizedBox(height: context.tokens.s24),
+                  _Footer(),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),
@@ -109,20 +104,10 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-            color: Colors.black.withOpacity(0.06),
-          ),
-        ],
-      ),
-      child: child,
+    final scheme = Theme.of(context).colorScheme;
+
+    return Card(
+      child: Padding(padding: EdgeInsets.all(context.tokens.s16), child: child),
     );
   }
 }
@@ -140,25 +125,25 @@ class _CurrencyBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+    final scheme = Theme.of(context).colorScheme;
 
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(context.tokens.rMd),
       child: Container(
-        height: 44,
+        height: context.isTablet ? 48 : 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isSelected ? primary : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          color: isSelected ? scheme.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(context.tokens.rMd),
           border: Border.all(
-            color: isSelected ? primary : Colors.grey.shade300,
+            color: isSelected ? scheme.primary : scheme.outline,
           ),
         ),
         child: Text(
           label,
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: isSelected ? Colors.white : null,
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: isSelected ? scheme.onPrimary : scheme.onSurface,
           ),
         ),
       ),
@@ -181,32 +166,72 @@ class _DangerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(context.tokens.s16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFEEEE),
-        borderRadius: BorderRadius.circular(16),
+        color: context.tokens.dangerSurface,
+        borderRadius: BorderRadius.circular(context.tokens.rLg),
+        border: Border.all(color: scheme.outline.withOpacity(0.7)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
-          const SizedBox(height: 6),
-          Text(subtitle, style: const TextStyle(color: Colors.black54)),
-          const SizedBox(height: 12),
+          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          SizedBox(height: context.tokens.s8),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: scheme.onSurface.withOpacity(0.7),
+            ),
+          ),
+          SizedBox(height: context.tokens.s12),
           SizedBox(
             width: double.infinity,
-            height: 46,
+            height: context.isTablet ? 50 : 46,
             child: ElevatedButton(
               onPressed: onTap,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
+                backgroundColor: scheme.error,
+                foregroundColor: scheme.onError,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(context.tokens.rMd),
                 ),
               ),
-              child: Text(buttonText),
+              child: Text(
+                buttonText,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(color: scheme.onError),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Center(
+      child: Column(
+        children: [
+          Text(
+            'تطبيق تتبع المصروفات',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: scheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+          SizedBox(height: context.tokens.s8),
+          Text(
+            'الإصدار 1.0.0',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: scheme.onSurface.withOpacity(0.6),
             ),
           ),
         ],
