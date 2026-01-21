@@ -1,0 +1,12 @@
+{
+    "@@locale": "en",
+    "settingsTitle": "Settings",
+    "currencyTitle": "Currency",
+    "darkMode": "Dark mode",
+    "languageTitle": "Language",
+    "resetDataTitle": "Reset data",
+    "resetDataSubtitle": "All saved expenses will be permanently deleted",
+    "deleteAllExpenses": "Delete all expenses",
+    "appName": "Expense Tracker",
+    "version": "Version {version}"
+}

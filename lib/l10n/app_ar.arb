@@ -1,0 +1,12 @@
+{
+    "@@locale": "ar",
+    "settingsTitle": "الإعدادات",
+    "currencyTitle": "العملة",
+    "darkMode": "الوضع الليلي",
+    "languageTitle": "اللغة",
+    "resetDataTitle": "تصفير البيانات",
+    "resetDataSubtitle": "سيتم حذف جميع المصاريف المسجلة بشكل نهائي",
+    "deleteAllExpenses": "حذف جميع المصاريف",
+    "appName": "تطبيق تتبع المصروفات",
+    "version": "الإصدار {version}"
+}

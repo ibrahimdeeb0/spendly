@@ -13,6 +13,9 @@ dependencies:
   equatable: ^2.0.8
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
   flutter_bloc: ^9.1.1
   flutter_localization: ^0.3.3
   get_it: ^9.2.0
@@ -32,6 +35,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
+
   assets:
     - assets/images/
     - assets/icons/

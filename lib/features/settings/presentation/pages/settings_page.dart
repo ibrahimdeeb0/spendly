@@ -6,7 +6,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('الإعدادات')),
+      appBar: AppBar(title: Text(context.tr.settingsTitle)),
       body: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {
           if (state.isLoading) {
@@ -24,7 +24,7 @@ class SettingsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'العملة',
+                          context.tr.currencyTitle,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         SizedBox(height: context.tokens.s12),
@@ -69,7 +69,7 @@ class SettingsPage extends StatelessWidget {
                     child: SwitchListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        'الوضع الليلي',
+                        context.tr.darkMode,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       value: state.isDark,
@@ -79,14 +79,12 @@ class SettingsPage extends StatelessWidget {
                   ),
                   SizedBox(height: context.tokens.s12),
                   _DangerCard(
-                    title: 'تصفير البيانات',
-                    subtitle: 'سيتم حذف جميع المصاريف المسجلة بشكل نهائي',
-                    buttonText: 'حذف جميع المصاريف',
-                    onTap: () {
-                      // TODO: Wire this after expenses feature is ready.
-                    },
+                    title: context.tr.resetDataTitle,
+                    subtitle: context.tr.resetDataSubtitle,
+                    buttonText: context.tr.deleteAllExpenses,
+                    onTap: () {},
                   ),
-                  SizedBox(height: context.tokens.s24),
+                  SizedBox(height: context.tokens.s12),
                   _Footer(),
                 ],
               ),
@@ -222,16 +220,16 @@ class _Footer extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'تطبيق تتبع المصروفات',
+            context.tr.appName,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.6),
+              color: scheme.onSurface.colorWithOpacity(0.6),
             ),
           ),
           SizedBox(height: context.tokens.s8),
           Text(
-            'الإصدار 1.0.0',
+            context.tr.version('1.0.0'),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.6),
+              color: scheme.onSurface.colorWithOpacity(0.6),
             ),
           ),
         ],

@@ -1,3 +1,5 @@
+import 'package:spendly/l10n/app_localizations.dart';
+
 import '../general_exports.dart';
 import 'di/injector.dart';
 
@@ -16,8 +18,9 @@ class ExpenseTrackerApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             locale: locale,
-            supportedLocales: L10n.supportedLocales,
+            supportedLocales: AppLocalizations.supportedLocales,
             localizationsDelegates: const [
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
