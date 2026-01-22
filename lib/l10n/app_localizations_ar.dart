@@ -107,4 +107,49 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get empty_expenses_subtitle => 'أضف أول مصروف للبدء';
+
+  @override
+  String get add_expense_title => 'إضافة مصروف';
+
+  @override
+  String get amount => 'المبلغ';
+
+  @override
+  String get category_title => 'الفئة';
+
+  @override
+  String get note => 'ملاحظة';
+
+  @override
+  String get note_hint => 'أضف مصروف';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get saved_success_fully => 'تم حفظ المصروف بنجاح';
+
+  @override
+  String get saved_failed => 'فشل حفظ المصروف. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get invalid_amount => 'يرجى إدخال مبلغ صحيح';
+
+  @override
+  String get cat_food => 'الطعام';
+
+  @override
+  String get cat_shopping => 'التسوق';
+
+  @override
+  String get cat_transport => 'النقلات';
+
+  @override
+  String get cat_bills => 'الفواتير';
+
+  @override
+  String get cat_other => 'أخرى';
+
+  @override
+  String get date_title => 'اختر التاريخ';
 }

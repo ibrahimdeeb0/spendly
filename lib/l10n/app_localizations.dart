@@ -289,6 +289,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add your first expense to get started'**
   String get empty_expenses_subtitle;
+
+  /// No description provided for @add_expense_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Expense'**
+  String get add_expense_title;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @category_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category_title;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @note_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Expense'**
+  String get note_hint;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @saved_success_fully.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense saved successfully'**
+  String get saved_success_fully;
+
+  /// No description provided for @saved_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save expense. Please try again.'**
+  String get saved_failed;
+
+  /// No description provided for @invalid_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid amount'**
+  String get invalid_amount;
+
+  /// No description provided for @cat_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get cat_food;
+
+  /// No description provided for @cat_shopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get cat_shopping;
+
+  /// No description provided for @cat_transport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get cat_transport;
+
+  /// No description provided for @cat_bills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get cat_bills;
+
+  /// No description provided for @cat_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get cat_other;
+
+  /// No description provided for @date_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get date_title;
 }
 
 class _AppLocalizationsDelegate

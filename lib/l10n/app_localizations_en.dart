@@ -109,4 +109,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get empty_expenses_subtitle => 'Add your first expense to get started';
+
+  @override
+  String get add_expense_title => 'Add Expense';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get category_title => 'Category';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get note_hint => 'Add Expense';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get saved_success_fully => 'Expense saved successfully';
+
+  @override
+  String get saved_failed => 'Failed to save expense. Please try again.';
+
+  @override
+  String get invalid_amount => 'Please enter a valid amount';
+
+  @override
+  String get cat_food => 'Food';
+
+  @override
+  String get cat_shopping => 'Shopping';
+
+  @override
+  String get cat_transport => 'Transport';
+
+  @override
+  String get cat_bills => 'Bills';
+
+  @override
+  String get cat_other => 'Other';
+
+  @override
+  String get date_title => 'Select Date';
 }

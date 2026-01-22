@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, AppRouters.addExpense),
         child: const Icon(Icons.add),
       ),
       body: Center(

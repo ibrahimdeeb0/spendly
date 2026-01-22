@@ -7,7 +7,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case AppRouters.home:
         return MaterialPageRoute(builder: (_) => const HomePage());
-      
+      case AppRouters.addExpense:
+        return MaterialPageRoute(builder: (_) => const AddExpensePage());
+
       case '/':
         return MaterialPageRoute(builder: (_) => const HomePage());
       default:

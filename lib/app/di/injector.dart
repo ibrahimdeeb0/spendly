@@ -21,4 +21,16 @@ Future<void> configureDependencies() async {
 
   // Settings - cubit
   sl.registerFactory(() => SettingsCubit(sl(), sl(), sl(), sl(), sl()));
+
+  // Expenses - data
+  sl.registerLazySingleton<ExpensesLocalDataSource>(
+    () => ExpensesLocalDataSource(),
+  );
+  sl.registerLazySingleton<ExpensesRepo>(() => ExpensesRepoImpl(sl()));
+
+  // Expenses - usecases
+  sl.registerLazySingleton(() => AddExpenseUseCase(sl()));
+
+  // Add Expense Cubit
+  sl.registerFactory(() => AddExpenseCubit(sl()));
 }
