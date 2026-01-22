@@ -6,6 +6,8 @@ Future<void> bootstrap() async {
 
   // Hive init
   await Hive.initFlutter();
+  Hive.registerAdapter(ExpenseModelAdapter());
+  // if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(ExpenseModelAdapter());
 
   // DI init
   await configureDependencies();
