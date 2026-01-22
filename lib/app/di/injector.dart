@@ -17,6 +17,8 @@ Future<void> configureDependencies() async {
   sl.registerLazySingleton(() => SetLocaleUseCase(sl()));
   sl.registerLazySingleton(() => SetCurrencyUseCase(sl()));
 
+  sl.registerLazySingleton<AppInfo>(() => PackageAppInfo());
+
   // Settings - cubit
-  sl.registerFactory(() => SettingsCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => SettingsCubit(sl(), sl(), sl(), sl(), sl()));
 }

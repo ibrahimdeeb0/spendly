@@ -6,89 +6,93 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.tr.settingsTitle)),
-      body: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, state) {
-          if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+      appBar: AppBar(title: Text(context.tr.settings_title)),
+      body: BlocListener<SettingsCubit, SettingsState>(
+        listenWhen: (prev, curr) => prev.actionMessage != curr.actionMessage,
+        listener: (context, state) {
+          if (state.actionMessage == null) return;
+
+          final msg = switch (state.actionMessage) {
+            'RESET_SUCCESS' => context.tr.reset_success,
+            _ => context.tr.reset_failed,
+          };
+
+          if (state.actionMessage == 'RESET_SUCCESS') {
+            AppSnackBar.success(context, msg);
+          } else {
+            AppSnackBar.error(context, msg);
           }
 
-          return Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: context.contentMaxWidth),
-              child: ListView(
-                padding: context.pagePadding,
-                children: [
-                  _SectionCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.tr.currencyTitle,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        SizedBox(height: context.tokens.s12),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _CurrencyBtn(
-                                label: r'$',
-                                isSelected: state.currency == 'USD',
-                                onTap: () => context
-                                    .read<SettingsCubit>()
-                                    .setCurrency('USD'),
-                              ),
-                            ),
-                            SizedBox(width: context.tokens.s12),
-                            Expanded(
-                              child: _CurrencyBtn(
-                                label: '₪',
-                                isSelected: state.currency == 'ILS',
-                                onTap: () => context
-                                    .read<SettingsCubit>()
-                                    .setCurrency('ILS'),
-                              ),
-                            ),
-                            SizedBox(width: context.tokens.s12),
-                            Expanded(
-                              child: _CurrencyBtn(
-                                label: 'ريال',
-                                isSelected: state.currency == 'SAR',
-                                onTap: () => context
-                                    .read<SettingsCubit>()
-                                    .setCurrency('SAR'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: context.tokens.s12),
-                  _SectionCard(
-                    child: SwitchListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        context.tr.darkMode,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      value: state.isDark,
-                      onChanged: (_) =>
-                          context.read<SettingsCubit>().toggleTheme(),
-                    ),
-                  ),
-                  SizedBox(height: context.tokens.s12),
-                  _DangerCard(
-                    title: context.tr.resetDataTitle,
-                    subtitle: context.tr.resetDataSubtitle,
-                    buttonText: context.tr.deleteAllExpenses,
-                    onTap: () {},
-                  ),
-                  SizedBox(height: context.tokens.s12),
-                  _Footer(),
-                ],
-              ),
+          context.read<SettingsCubit>().clearActionMessage();
+        },
+        child: const SafeArea(child: _Body()),
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: context.contentMaxWidth),
+        child: ListView(
+          padding: context.pagePadding,
+          children: [
+            AppSectionHeader(
+              title: context.tr.appearance_section,
+              icon: Icons.palette_outlined,
             ),
+            SizedBox(height: context.tokens.s12),
+            const _AppearanceSection(),
+
+            SizedBox(height: context.tokens.s20),
+            AppSectionHeader(
+              title: context.tr.currency_section,
+              icon: Icons.payments_outlined,
+            ),
+            SizedBox(height: context.tokens.s12),
+            const _CurrencySection(),
+
+            SizedBox(height: context.tokens.s20),
+            AppSectionHeader(
+              title: context.tr.data_section,
+              icon: Icons.delete_outline,
+            ),
+            SizedBox(height: context.tokens.s12),
+            const _DataSection(),
+
+            SizedBox(height: context.tokens.s20),
+            const _Footer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CurrencySection extends StatelessWidget {
+  const _CurrencySection();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      child: BlocSelector<SettingsCubit, SettingsState, String>(
+        selector: (s) => s.currency,
+        builder: (context, currency) {
+          return SegmentedButton<String>(
+            segments: const [
+              ButtonSegment(value: 'USD', label: Text(r'$')),
+              ButtonSegment(value: 'ILS', label: Text('₪')),
+              ButtonSegment(value: 'SAR', label: Text('SAR')),
+            ],
+            selected: {currency},
+            onSelectionChanged: (set) {
+              context.read<SettingsCubit>().setCurrency(set.first);
+            },
           );
         },
       ),
@@ -96,144 +100,162 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class _SectionCard extends StatelessWidget {
-  final Widget child;
-  const _SectionCard({required this.child});
+class _AppearanceSection extends StatelessWidget {
+  const _AppearanceSection();
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Card(
-      child: Padding(padding: EdgeInsets.all(context.tokens.s16), child: child),
+    return Column(
+      children: [
+        AppCard(
+          child: BlocSelector<SettingsCubit, SettingsState, bool>(
+            selector: (s) => s.isDark,
+            builder: (context, isDark) {
+              return SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  context.tr.darkMode,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                value: isDark,
+                onChanged: (_) => context.read<SettingsCubit>().toggleTheme(),
+              );
+            },
+          ),
+        ),
+        SizedBox(height: context.tokens.s12),
+        AppCard(
+          child: BlocSelector<SettingsCubit, SettingsState, String>(
+            selector: (s) => s.locale,
+            builder: (context, locale) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.tr.language_title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  SizedBox(height: context.tokens.s12),
+                  SegmentedButton<String>(
+                    segments: [
+                      ButtonSegment(
+                        value: 'ar',
+                        label: Text(context.tr.arabic),
+                      ),
+                      ButtonSegment(
+                        value: 'en',
+                        label: Text(context.tr.english),
+                      ),
+                    ],
+                    selected: {locale},
+                    onSelectionChanged: (set) {
+                      context.read<SettingsCubit>().setLocale(set.first);
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
 
-class _CurrencyBtn extends StatelessWidget {
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _CurrencyBtn({
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
+class _DataSection extends StatelessWidget {
+  const _DataSection();
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(context.tokens.rMd),
-      child: Container(
-        height: context.isTablet ? 48 : 44,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isSelected ? scheme.primary : Colors.transparent,
-          borderRadius: BorderRadius.circular(context.tokens.rMd),
-          border: Border.all(
-            color: isSelected ? scheme.primary : scheme.outline,
-          ),
-        ),
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: isSelected ? scheme.onPrimary : scheme.onSurface,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DangerCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String buttonText;
-  final VoidCallback onTap;
-
-  const _DangerCard({
-    required this.title,
-    required this.subtitle,
-    required this.buttonText,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      padding: EdgeInsets.all(context.tokens.s16),
-      decoration: BoxDecoration(
-        color: context.tokens.dangerSurface,
-        borderRadius: BorderRadius.circular(context.tokens.rLg),
-        border: Border.all(color: scheme.outline.withOpacity(0.7)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
-          SizedBox(height: context.tokens.s8),
-          Text(
-            subtitle,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurface.withOpacity(0.7),
-            ),
-          ),
-          SizedBox(height: context.tokens.s12),
-          SizedBox(
-            width: double.infinity,
-            height: context.isTablet ? 50 : 46,
-            child: ElevatedButton(
-              onPressed: onTap,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: scheme.error,
-                foregroundColor: scheme.onError,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(context.tokens.rMd),
+    return AppCard(
+      child: BlocSelector<SettingsCubit, SettingsState, bool>(
+        selector: (s) => s.isResetting,
+        builder: (context, isResetting) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.tr.reset_data_title,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              SizedBox(height: context.tokens.s8),
+              Text(
+                context.tr.reset_data_subtitle,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.colorWithOpacity(0.7),
                 ),
               ),
-              child: Text(
-                buttonText,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(color: scheme.onError),
+              SizedBox(height: context.tokens.s12),
+              SizedBox(
+                width: double.infinity,
+                height: context.isTablet ? 50 : 46,
+                child: ElevatedButton(
+                  onPressed: isResetting
+                      ? null
+                      : () async {
+                          final ok = await AppDialog.confirm(
+                            context,
+                            title: context.tr.confirm_title,
+                            message: context.tr.confirm_reset_body,
+                            confirmText: context.tr.confirm,
+                            cancelText: context.tr.cancel,
+                            isDanger: true,
+                            icon: Icons.warning_amber_rounded,
+                          );
+
+                          if (ok && context.mounted) {
+                            await context.read<SettingsCubit>().resetAllData();
+                          }
+                        },
+                  child: isResetting
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Text(context.tr.delete_all_expenses),
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 class _Footer extends StatelessWidget {
+  const _Footer();
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Center(
-      child: Column(
-        children: [
-          Text(
-            context.tr.appName,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: scheme.onSurface.colorWithOpacity(0.6),
-            ),
+    return BlocSelector<SettingsCubit, SettingsState, String?>(
+      selector: (s) => s.appVersion,
+      builder: (context, version) {
+        return Center(
+          child: Column(
+            children: [
+              Text(
+                context.tr.app_name,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: scheme.onSurface.colorWithOpacity(0.6),
+                ),
+              ),
+              SizedBox(height: context.tokens.s8),
+              Text(
+                context.tr.version(version ?? '-'),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: scheme.onSurface.colorWithOpacity(0.6),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: context.tokens.s8),
-          Text(
-            context.tr.version('1.0.0'),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: scheme.onSurface.colorWithOpacity(0.6),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

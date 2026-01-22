@@ -98,17 +98,29 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
-  /// No description provided for @settingsTitle.
+  /// No description provided for @arabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabic;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @settings_title.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
-  String get settingsTitle;
+  String get settings_title;
 
-  /// No description provided for @currencyTitle.
+  /// No description provided for @currency_title.
   ///
   /// In en, this message translates to:
   /// **'Currency'**
-  String get currencyTitle;
+  String get currency_title;
 
   /// No description provided for @darkMode.
   ///
@@ -116,41 +128,167 @@ abstract class AppLocalizations {
   /// **'Dark mode'**
   String get darkMode;
 
-  /// No description provided for @languageTitle.
+  /// No description provided for @language_title.
   ///
   /// In en, this message translates to:
   /// **'Language'**
-  String get languageTitle;
+  String get language_title;
 
-  /// No description provided for @resetDataTitle.
+  /// No description provided for @reset_data_title.
   ///
   /// In en, this message translates to:
   /// **'Reset data'**
-  String get resetDataTitle;
+  String get reset_data_title;
 
-  /// No description provided for @resetDataSubtitle.
+  /// No description provided for @reset_data_subtitle.
   ///
   /// In en, this message translates to:
   /// **'All saved expenses will be permanently deleted'**
-  String get resetDataSubtitle;
+  String get reset_data_subtitle;
 
-  /// No description provided for @deleteAllExpenses.
+  /// No description provided for @delete_all_expenses.
   ///
   /// In en, this message translates to:
   /// **'Delete all expenses'**
-  String get deleteAllExpenses;
+  String get delete_all_expenses;
 
-  /// No description provided for @appName.
+  /// No description provided for @app_name.
   ///
   /// In en, this message translates to:
   /// **'Expense Tracker'**
-  String get appName;
+  String get app_name;
 
   /// No description provided for @version.
   ///
   /// In en, this message translates to:
   /// **'Version {version}'**
   String version(Object version);
+
+  /// No description provided for @appearance_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance_section;
+
+  /// No description provided for @currency_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency_section;
+
+  /// No description provided for @data_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get data_section;
+
+  /// No description provided for @confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation'**
+  String get confirm_title;
+
+  /// No description provided for @confirm_reset_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all expenses?'**
+  String get confirm_reset_body;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @reset_success.
+  ///
+  /// In en, this message translates to:
+  /// **'All expenses deleted successfully.'**
+  String get reset_success;
+
+  /// No description provided for @reset_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get reset_failed;
+
+  /// No description provided for @recent_expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Expenses'**
+  String get recent_expenses;
+
+  /// No description provided for @today_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Total'**
+  String get today_total;
+
+  /// No description provided for @transactions_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions {Count}'**
+  String transactions_count(Object Count);
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
+
+  /// No description provided for @month.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month;
+
+  /// No description provided for @year.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @top_categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Categories'**
+  String get top_categories;
+
+  /// No description provided for @view_stats.
+  ///
+  /// In en, this message translates to:
+  /// **'View Statistics'**
+  String get view_stats;
+
+  /// No description provided for @empty_expenses_title.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses added yet'**
+  String get empty_expenses_title;
+
+  /// No description provided for @empty_expenses_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first expense to get started'**
+  String get empty_expenses_subtitle;
 }
 
 class _AppLocalizationsDelegate

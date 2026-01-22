@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTypography {
-  static TextTheme buildTextTheme({required Brightness brightness}) {
-    final base = GoogleFonts.cairoTextTheme();
+  static TextTheme buildTextTheme({required ColorScheme scheme}) {
+    final base = GoogleFonts.cairoTextTheme().apply(
+      bodyColor: scheme.onSurface,
+      displayColor: scheme.onSurface,
+    );
 
-    // Keep colors consistent with Material color scheme via ThemeData later
-    // Here we focus on sizes/weights/height.
     return base.copyWith(
       displaySmall: base.displaySmall?.copyWith(
         fontSize: 28,

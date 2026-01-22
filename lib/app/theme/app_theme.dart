@@ -12,7 +12,7 @@ class AppTheme {
       useMaterial3: true,
       brightness: scheme.brightness,
       colorScheme: scheme,
-      textTheme: AppTypography.buildTextTheme(brightness: scheme.brightness),
+      textTheme: AppTypography.buildTextTheme(scheme: scheme),
       scaffoldBackgroundColor: scheme.surface,
     );
 
