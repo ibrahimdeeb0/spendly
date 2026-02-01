@@ -1,16 +1,12 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spendly/core/utils/app_info.dart';
-import '../../domain/usecases/get_settings.dart';
-import '../../domain/usecases/set_currency.dart';
-import '../../domain/usecases/set_locale.dart';
-import '../../domain/usecases/set_theme_mode.dart';
-import 'settings_state.dart';
+import 'package:spendly/general_exports.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   final GetSettingsUseCase _getSettings;
   final SetThemeModeUseCase _setTheme;
   final SetLocaleUseCase _setLocale;
   final SetCurrencyUseCase _setCurrency;
+  final ResetAllSettingsUseCase _resetAllSettingsUseCase;
+  final DeleteAllExpensesUseCase _deleteAllExpensesUseCase;
   final AppInfo _appInfo;
 
   SettingsCubit(
@@ -19,6 +15,8 @@ class SettingsCubit extends Cubit<SettingsState> {
     this._setLocale,
     this._setCurrency,
     this._appInfo,
+    this._resetAllSettingsUseCase,
+    this._deleteAllExpensesUseCase,
   ) : super(SettingsState.initial());
 
   Future<void> load() async {
@@ -53,21 +51,22 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   // UI calls this after confirmation dialog.
-  Future<void> resetAllData() async {
+  Future<void> resetAllSettings() async {
     emit(state.copyWith(isResetting: true, actionMessage: null));
 
     try {
       // Wire with real use case later:
-      // await _resetAllDataUseCase();
-
-      await Future<void>.delayed(
-        const Duration(milliseconds: 600),
-      ); // placeholder
+      await _resetAllSettingsUseCase();
 
       emit(state.copyWith(isResetting: false, actionMessage: 'RESET_SUCCESS'));
     } catch (_) {
       emit(state.copyWith(isResetting: false, actionMessage: 'RESET_FAILED'));
     }
+  }
+
+  Future<void> resetExpenses() async {
+    await _deleteAllExpensesUseCase();
+    emit(state.copyWith(actionMessage: 'RESET_SUCCESS'));
   }
 
   // Call after showing snackbar to avoid repeating on rebuild.

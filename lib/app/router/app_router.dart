@@ -3,17 +3,32 @@ import 'package:spendly/general_exports.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRouters.settings:
-        return MaterialPageRoute(builder: (_) => const SettingsPage());
-      case AppRouters.home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
-      case AppRouters.addExpense:
-        return MaterialPageRoute(builder: (_) => const AddExpensePage());
+      case AppRoutes.home:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ExpensesCubit>()..load(),
+            child: const HomePage(),
+          ),
+        );
 
-      case '/':
-        return MaterialPageRoute(builder: (_) => const HomePage());
+      case AppRoutes.settings:
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
+
+      case AppRoutes.addExpense:
+        final args = settings.arguments as AddExpenseRouteArgs?;
+        return MaterialPageRoute(
+          builder: (_) => AddExpensePage(initialExpense: args?.expense),
+        );
+
       default:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return _unknownRoute();
     }
+  }
+
+  static Route<dynamic> _unknownRoute() {
+    return MaterialPageRoute(
+      builder: (_) =>
+          const Scaffold(body: Center(child: Text('Route not found'))),
+    );
   }
 }

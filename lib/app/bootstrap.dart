@@ -1,5 +1,4 @@
 import '../general_exports.dart';
-import 'di/injector.dart';
 
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();

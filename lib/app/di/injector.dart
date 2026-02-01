@@ -2,35 +2,56 @@ import 'package:get_it/get_it.dart';
 
 import '../../general_exports.dart';
 
-final sl = GetIt.instance;
+final getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
   // Settings - data
-  sl.registerLazySingleton<SettingsLocalDataSource>(
+  getIt.registerLazySingleton<SettingsLocalDataSource>(
     () => SettingsLocalDataSource(),
   );
-  sl.registerLazySingleton<SettingsRepo>(() => SettingsRepoImpl(sl()));
+  getIt.registerLazySingleton<SettingsRepo>(
+    () => SettingsRepoImpl(
+      getIt<SettingsLocalDataSource>(),
+      getIt<ExpensesLocalDataSource>(),
+    ),
+  );
 
   // Settings - usecases
-  sl.registerLazySingleton(() => GetSettingsUseCase(sl()));
-  sl.registerLazySingleton(() => SetThemeModeUseCase(sl()));
-  sl.registerLazySingleton(() => SetLocaleUseCase(sl()));
-  sl.registerLazySingleton(() => SetCurrencyUseCase(sl()));
+  getIt.registerLazySingleton(() => GetSettingsUseCase(getIt()));
+  getIt.registerLazySingleton(() => SetThemeModeUseCase(getIt()));
+  getIt.registerLazySingleton(() => SetLocaleUseCase(getIt()));
+  getIt.registerLazySingleton(() => SetCurrencyUseCase(getIt()));
 
-  sl.registerLazySingleton<AppInfo>(() => PackageAppInfo());
+  getIt.registerLazySingleton<AppInfo>(() => PackageAppInfo());
 
   // Settings - cubit
-  sl.registerFactory(() => SettingsCubit(sl(), sl(), sl(), sl(), sl()));
+  getIt.registerFactory(
+    () => SettingsCubit(
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+    ),
+  );
 
   // Expenses - data
-  sl.registerLazySingleton<ExpensesLocalDataSource>(
+  getIt.registerLazySingleton<ExpensesLocalDataSource>(
     () => ExpensesLocalDataSource(),
   );
-  sl.registerLazySingleton<ExpensesRepo>(() => ExpensesRepoImpl(sl()));
+  getIt.registerLazySingleton<ExpensesRepo>(() => ExpensesRepoImpl(getIt()));
 
   // Expenses - usecases
-  sl.registerLazySingleton(() => AddExpenseUseCase(sl()));
+  getIt.registerLazySingleton(() => GetAllExpensesUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddExpenseUseCase(getIt()));
+  getIt.registerLazySingleton(() => DeleteExpenseUseCase(getIt()));
+  getIt.registerLazySingleton(() => DeleteAllExpensesUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateExpenseUseCase(getIt()));
+  getIt.registerLazySingleton(() => ResetAllSettingsUseCase(getIt()));
 
   // Add Expense Cubit
-  sl.registerFactory(() => AddExpenseCubit(sl()));
+  getIt.registerFactory(() => ExpensesCubit(getIt(), getIt(), getIt()));
+  getIt.registerFactory(() => AddExpenseCubit(getIt(), getIt()));
 }

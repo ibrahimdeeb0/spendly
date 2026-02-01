@@ -152,4 +152,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get date_title => 'اختر التاريخ';
+
+  @override
+  String get yesterday => 'أمس';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get no_note => 'لا توجد ملاحظة مضافة';
+
+  @override
+  String get no_categories_yet => 'لا توجد فئات بعد';
+
+  @override
+  String get edit_expense_title => 'تعديل المصروف';
+
+  @override
+  String get expense_updated_successfully => 'تم تحديث المصروف بنجاح';
+
+  @override
+  String get expense_updated_failed =>
+      'فشل تحديث المصروف. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get expense_deleted_successfully => 'تم حذف المصروف بنجاح';
 }

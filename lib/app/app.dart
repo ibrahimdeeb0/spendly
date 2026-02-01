@@ -1,7 +1,6 @@
 import 'package:spendly/l10n/app_localizations.dart';
 
 import '../general_exports.dart';
-import 'di/injector.dart';
 
 class ExpenseTrackerApp extends StatelessWidget {
   const ExpenseTrackerApp({super.key});
@@ -9,7 +8,7 @@ class ExpenseTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<SettingsCubit>()..load(),
+      create: (_) => getIt<SettingsCubit>()..load(),
       child: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {
           final theme = state.isDark ? AppTheme.dark() : AppTheme.light();
@@ -27,6 +26,7 @@ class ExpenseTrackerApp extends StatelessWidget {
             ],
             theme: theme,
             onGenerateRoute: AppRouter.onGenerateRoute,
+            initialRoute: AppRoutes.home,
           );
         },
       ),

@@ -379,6 +379,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Date'**
   String get date_title;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @no_note.
+  ///
+  /// In en, this message translates to:
+  /// **'No note added'**
+  String get no_note;
+
+  /// No description provided for @no_categories_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories yet'**
+  String get no_categories_yet;
+
+  /// No description provided for @edit_expense_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Expense'**
+  String get edit_expense_title;
+
+  /// No description provided for @expense_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense updated successfully'**
+  String get expense_updated_successfully;
+
+  /// No description provided for @expense_updated_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update expense. Please try again.'**
+  String get expense_updated_failed;
+
+  /// No description provided for @expense_deleted_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense deleted successfully'**
+  String get expense_deleted_successfully;
 }
 
 class _AppLocalizationsDelegate

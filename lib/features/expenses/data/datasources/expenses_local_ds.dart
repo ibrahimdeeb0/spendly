@@ -12,4 +12,24 @@ class ExpensesLocalDataSource {
     final box = await _box();
     await box.put(model.id, model);
   }
+
+  Future<List<ExpenseModel>> getAll() async {
+    final box = await _box();
+    return box.values.toList();
+  }
+
+  Future<void> updateExpense(ExpenseModel model) async {
+    final box = await _box();
+    await box.put(model.id, model);
+  }
+
+  Future<void> deleteExpense(String id) async {
+    final box = await _box();
+    await box.delete(id);
+  }
+
+  Future<void> deleteAll() async {
+    final box = await _box();
+    await box.clear();
+  }
 }
