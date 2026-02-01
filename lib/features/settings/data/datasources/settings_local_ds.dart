@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import '../../../../core/constants/hive_keys.dart';
 
 class SettingsLocalDataSource {
-  Future<Box> _open() => Hive.openBox(HiveBoxes.settings);
+  Future<Box> _open() => Hive.openBox<String>(HiveBoxes.settings);
 
   Future<String?> getThemeMode() async {
     final box = await _open();

@@ -154,4 +154,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get date_title => 'Select Date';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get no_note => 'No note added';
+
+  @override
+  String get no_categories_yet => 'No categories yet';
+
+  @override
+  String get edit_expense_title => 'Edit Expense';
+
+  @override
+  String get expense_updated_successfully => 'Expense updated successfully';
+
+  @override
+  String get expense_updated_failed =>
+      'Failed to update expense. Please try again.';
+
+  @override
+  String get expense_deleted_successfully => 'Expense deleted successfully';
 }

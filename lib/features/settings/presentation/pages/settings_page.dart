@@ -206,7 +206,9 @@ class _DataSection extends StatelessWidget {
                           );
 
                           if (ok && context.mounted) {
-                            await context.read<SettingsCubit>().resetAllData();
+                            context.read<SettingsCubit>()
+                              ..resetAllSettings()
+                              ..resetExpenses();
                           }
                         },
                   child: isResetting
