@@ -30,8 +30,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reset_data_title => 'Reset data';
 
   @override
-  String get reset_data_subtitle =>
+  String get reset_expenses_data_subtitle =>
       'All saved expenses will be permanently deleted';
+
+  @override
+  String get reset_data_success_message =>
+      'All data has been reset successfully.';
 
   @override
   String get delete_all_expenses => 'Delete all expenses';
@@ -57,8 +61,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirm_title => 'Confirmation';
 
   @override
-  String get confirm_reset_body =>
-      'Are you sure you want to delete all expenses?';
+  String get confirm_reset_body => 'Are you sure you want to delete all data?';
 
   @override
   String get cancel => 'Cancel';
@@ -185,4 +188,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expense_deleted_successfully => 'Expense deleted successfully';
+
+  @override
+  String get delete_all_expenses_success =>
+      'All expenses deleted successfully.';
+
+  @override
+  String get delete_all_expenses_failed =>
+      'Failed to delete all expenses. Please try again.';
+
+  @override
+  String get something_went_wrong => 'Something went wrong. Please try again.';
 }

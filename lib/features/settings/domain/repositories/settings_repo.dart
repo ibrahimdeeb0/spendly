@@ -8,6 +8,10 @@ abstract class SettingsRepo {
   Future<String?> getCurrency(); // 'USD' | 'ILS' | 'SAR'
   Future<void> setCurrency(String value);
 
-  Future<void> resetAllData();
+  Future<void> resetAllData({
+    required String theme,
+    required String locale,
+    required String currency,
+  });
   Future<void> deleteAllExpenses();
 }

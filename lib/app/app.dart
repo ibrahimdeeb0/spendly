@@ -26,7 +26,10 @@ class ExpenseTrackerApp extends StatelessWidget {
             ],
             theme: theme,
             onGenerateRoute: AppRouter.onGenerateRoute,
-            initialRoute: AppRoutes.home,
+            home: BlocProvider(
+              create: (_) => getIt<ExpensesCubit>()..load(),
+              child: const HomePage(),
+            ),
           );
         },
       ),

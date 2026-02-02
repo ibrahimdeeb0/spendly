@@ -30,7 +30,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reset_data_title => 'إعادة تعيين البيانات';
 
   @override
-  String get reset_data_subtitle => 'سيتم حذف جميع المصروفات المحفوظة نهائيًا';
+  String get reset_expenses_data_subtitle =>
+      'سيتم حذف جميع المصروفات المحفوظة نهائيًا';
+
+  @override
+  String get reset_data_success_message =>
+      'تم إعادة تعيين جميع البيانات بنجاح.';
 
   @override
   String get delete_all_expenses => 'حذف جميع المصروفات';
@@ -56,7 +61,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get confirm_title => 'تأكيد';
 
   @override
-  String get confirm_reset_body => 'هل أنت متأكد أنك تريد حذف جميع المصروفات؟';
+  String get confirm_reset_body => 'هل أنت متأكد أنك تريد حذف جميع البيانات؟';
 
   @override
   String get cancel => 'إلغاء';
@@ -183,4 +188,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get expense_deleted_successfully => 'تم حذف المصروف بنجاح';
+
+  @override
+  String get delete_all_expenses_success => 'تم حذف جميع المصروفات بنجاح.';
+
+  @override
+  String get delete_all_expenses_failed =>
+      'فشل حذف جميع المصروفات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get something_went_wrong => 'حدث خطأ ما. يرجى المحاولة مرة أخرى.';
 }

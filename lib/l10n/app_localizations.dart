@@ -140,11 +140,17 @@ abstract class AppLocalizations {
   /// **'Reset data'**
   String get reset_data_title;
 
-  /// No description provided for @reset_data_subtitle.
+  /// No description provided for @reset_expenses_data_subtitle.
   ///
   /// In en, this message translates to:
   /// **'All saved expenses will be permanently deleted'**
-  String get reset_data_subtitle;
+  String get reset_expenses_data_subtitle;
+
+  /// No description provided for @reset_data_success_message.
+  ///
+  /// In en, this message translates to:
+  /// **'All data has been reset successfully.'**
+  String get reset_data_success_message;
 
   /// No description provided for @delete_all_expenses.
   ///
@@ -191,7 +197,7 @@ abstract class AppLocalizations {
   /// No description provided for @confirm_reset_body.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to delete all expenses?'**
+  /// **'Are you sure you want to delete all data?'**
   String get confirm_reset_body;
 
   /// No description provided for @cancel.
@@ -439,6 +445,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expense deleted successfully'**
   String get expense_deleted_successfully;
+
+  /// No description provided for @delete_all_expenses_success.
+  ///
+  /// In en, this message translates to:
+  /// **'All expenses deleted successfully.'**
+  String get delete_all_expenses_success;
+
+  /// No description provided for @delete_all_expenses_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete all expenses. Please try again.'**
+  String get delete_all_expenses_failed;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get something_went_wrong;
 }
 
 class _AppLocalizationsDelegate

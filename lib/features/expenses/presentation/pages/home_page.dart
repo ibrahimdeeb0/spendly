@@ -10,7 +10,12 @@ class HomePage extends StatelessWidget {
         title: Text(context.tr.app_name),
         actions: [
           IconButton(
-            onPressed: () => Navigator.pushNamed(context, AppRoutes.settings),
+            onPressed: () async {
+              await Navigator.pushNamed(context, AppRoutes.settings);
+
+              if (!context.mounted) return;
+              context.read<ExpensesCubit>().load();
+            },
             icon: const Icon(Icons.settings_outlined),
           ),
         ],

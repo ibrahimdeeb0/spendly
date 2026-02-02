@@ -13,11 +13,17 @@ class SettingsPage extends StatelessWidget {
           if (state.actionMessage == null) return;
 
           final msg = switch (state.actionMessage) {
-            'RESET_SUCCESS' => context.tr.reset_success,
+            'RESET_SUCCESS' => context.tr.reset_data_success_message,
+            'DELETE_EXPENSES_SUCCESS' => context.tr.delete_all_expenses_success,
+            'DELETE_EXPENSES_FAILED' => context.tr.something_went_wrong,
             _ => context.tr.reset_failed,
           };
 
-          if (state.actionMessage == 'RESET_SUCCESS') {
+          final isSuccess =
+              state.actionMessage == 'RESET_SUCCESS' ||
+              state.actionMessage == 'DELETE_EXPENSES_SUCCESS';
+
+          if (isSuccess) {
             AppSnackBar.success(context, msg);
           } else {
             AppSnackBar.error(context, msg);
@@ -180,7 +186,7 @@ class _DataSection extends StatelessWidget {
               ),
               SizedBox(height: context.tokens.s8),
               Text(
-                context.tr.reset_data_subtitle,
+                context.tr.reset_expenses_data_subtitle,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,
@@ -188,37 +194,25 @@ class _DataSection extends StatelessWidget {
                 ),
               ),
               SizedBox(height: context.tokens.s12),
-              SizedBox(
-                width: double.infinity,
-                height: context.isTablet ? 50 : 46,
-                child: ElevatedButton(
-                  onPressed: isResetting
-                      ? null
-                      : () async {
-                          final ok = await AppDialog.confirm(
-                            context,
-                            title: context.tr.confirm_title,
-                            message: context.tr.confirm_reset_body,
-                            confirmText: context.tr.confirm,
-                            cancelText: context.tr.cancel,
-                            isDanger: true,
-                            icon: Icons.warning_amber_rounded,
-                          );
+              AppFilledButton(
+                label: context.tr.delete_all_expenses,
+                isLoading: isResetting,
+                isDanger: true,
+                onPressed: () async {
+                  final ok = await AppDialog.confirm(
+                    context,
+                    title: context.tr.confirm_title,
+                    message: context.tr.confirm_reset_body,
+                    confirmText: context.tr.confirm,
+                    cancelText: context.tr.cancel,
+                    isDanger: true,
+                    icon: Icons.warning_amber_rounded,
+                  );
 
-                          if (ok && context.mounted) {
-                            context.read<SettingsCubit>()
-                              ..resetAllSettings()
-                              ..resetExpenses();
-                          }
-                        },
-                  child: isResetting
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : Text(context.tr.delete_all_expenses),
-                ),
+                  if (ok && context.mounted) {
+                    context.read<SettingsCubit>().deleteAllExpenses();
+                  }
+                },
               ),
             ],
           );
