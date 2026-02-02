@@ -28,12 +28,15 @@ class SettingsRepoImpl implements SettingsRepo {
   Future<void> deleteAllExpenses() => expensesDs.deleteAll();
 
   @override
-  Future<void> resetAllData() {
+  Future<void> resetAllData({
+    required String theme,
+    required String locale,
+    required String currency,
+  }) {
     return Future.wait([
-      deleteAllExpenses(),
-      ds.setThemeMode('light'),
-      ds.setLocale('en'),
-      ds.setCurrency('USD'),
+      ds.setThemeMode(theme),
+      ds.setLocale(locale),
+      ds.setCurrency(currency),
     ]);
   }
 }

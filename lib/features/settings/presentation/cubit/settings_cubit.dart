@@ -50,23 +50,48 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _setCurrency(code);
   }
 
-  // UI calls this after confirmation dialog.
   Future<void> resetAllSettings() async {
     emit(state.copyWith(isResetting: true, actionMessage: null));
 
     try {
-      // Wire with real use case later:
-      await _resetAllSettingsUseCase();
+      await _resetAllSettingsUseCase(
+        theme: 'light',
+        locale: 'ar',
+        currency: 'USD',
+      );
 
-      emit(state.copyWith(isResetting: false, actionMessage: 'RESET_SUCCESS'));
+      emit(
+        state.copyWith(
+          isDark: false,
+          locale: 'ar',
+          currency: 'USD',
+          isResetting: false,
+          actionMessage: 'RESET_SUCCESS',
+        ),
+      );
     } catch (_) {
       emit(state.copyWith(isResetting: false, actionMessage: 'RESET_FAILED'));
     }
   }
 
-  Future<void> resetExpenses() async {
-    await _deleteAllExpensesUseCase();
-    emit(state.copyWith(actionMessage: 'RESET_SUCCESS'));
+  Future<void> deleteAllExpenses() async {
+    emit(state.copyWith(isResetting: true, actionMessage: null));
+    try {
+      await _deleteAllExpensesUseCase();
+      emit(
+        state.copyWith(
+          isResetting: false,
+          actionMessage: 'DELETE_EXPENSES_SUCCESS',
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          isResetting: false,
+          actionMessage: 'DELETE_EXPENSES_FAILED',
+        ),
+      );
+    }
   }
 
   // Call after showing snackbar to avoid repeating on rebuild.

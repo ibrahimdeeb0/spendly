@@ -5,5 +5,11 @@ class ResetAllSettingsUseCase {
 
   ResetAllSettingsUseCase(this.repo);
 
-  Future<void> call() => repo.resetAllData();
+  Future<void> call({
+    required String theme,
+    required String locale,
+    required String currency,
+  }) async {
+    await repo.resetAllData(theme: theme, locale: locale, currency: currency);
+  }
 }

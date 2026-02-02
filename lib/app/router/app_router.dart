@@ -3,14 +3,6 @@ import 'package:spendly/general_exports.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.home:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<ExpensesCubit>()..load(),
-            child: const HomePage(),
-          ),
-        );
-
       case AppRoutes.settings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
 
