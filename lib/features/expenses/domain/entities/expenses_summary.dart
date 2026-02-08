@@ -1,4 +1,4 @@
-import '../../domain/entities/expense.dart';
+import 'expense.dart';
 
 class ExpensesDayGroup {
   final DateTime day;
@@ -17,4 +17,18 @@ class TopCategoryItem {
     required this.ratio,
     required this.total,
   });
+}
+
+class ExpensesOverview {
+  final List<ExpensesDayGroup> groups;
+  final int todayCount;
+  final double todayTotal;
+  final List<TopCategoryItem> topCategories;
+
+  const ExpensesOverview(
+    this.groups,
+    this.todayCount,
+    this.todayTotal,
+    this.topCategories,
+  );
 }

@@ -10,27 +10,13 @@ class HomePage extends StatelessWidget {
         title: Text(context.tr.app_name),
         actions: [
           IconButton(
-            onPressed: () async {
-              await Navigator.pushNamed(context, AppRoutes.settings);
-
-              if (!context.mounted) return;
-              context.read<ExpensesCubit>().load();
-            },
+            onPressed: () => Navigator.pushNamed(context, AppRoutes.settings),
             icon: const Icon(Icons.settings_outlined),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final added = await Navigator.pushNamed(
-            context,
-            AppRoutes.addExpense,
-          );
-
-          if (added == true && context.mounted) {
-            context.read<ExpensesCubit>().load();
-          }
-        },
+        onPressed: () => Navigator.pushNamed(context, AppRoutes.addExpense),
         child: const Icon(Icons.add),
       ),
       body: RefreshIndicator.adaptive(
@@ -179,15 +165,6 @@ class _RangeChips extends StatelessWidget {
 class _TopCategoriesCard extends StatelessWidget {
   const _TopCategoriesCard();
 
-  String _label(BuildContext context, String id) {
-    return switch (id) {
-      'food' => context.tr.cat_food,
-      'shopping' => context.tr.cat_shopping,
-      'transport' => context.tr.cat_transport,
-      _ => context.tr.cat_other,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ExpensesCubit, ExpensesState, List<TopCategoryItem>>(
@@ -215,7 +192,7 @@ class _TopCategoriesCard extends StatelessWidget {
                 (e) => Padding(
                   padding: EdgeInsets.only(bottom: context.tokens.s12),
                   child: _TopCategoryRow(
-                    name: _label(context, e.categoryId),
+                    name: e.categoryId.toCategoryLabel(context),
                     ratio: e.ratio,
                   ),
                 ),
@@ -277,17 +254,17 @@ class _ExpensesList extends StatelessWidget {
     return BlocBuilder<ExpensesCubit, ExpensesState>(
       buildWhen: (oldState, newState) =>
           oldState.isLoading != newState.isLoading ||
-          oldState.groups != newState.groups,
+          oldState.expensesDayGroups != newState.expensesDayGroups,
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (state.groups.isEmpty) {
+        if (state.expensesDayGroups.isEmpty) {
           return const EmptyCard();
         }
 
         return Column(
-          children: state.groups
+          children: state.expensesDayGroups
               .map(
                 (g) => Padding(
                   padding: EdgeInsets.only(bottom: context.tokens.s12),
@@ -305,24 +282,6 @@ class _DayGroupCard extends StatelessWidget {
   final ExpensesDayGroup group;
   const _DayGroupCard({required this.group});
 
-  String _categoryLabel(BuildContext context, String id) {
-    return switch (id) {
-      'food' => context.tr.cat_food,
-      'shopping' => context.tr.cat_shopping,
-      'transport' => context.tr.cat_transport,
-      _ => context.tr.cat_other,
-    };
-  }
-
-  IconData _categoryIcon(String id) {
-    return switch (id) {
-      'food' => Icons.restaurant_outlined,
-      'shopping' => Icons.shopping_bag_outlined,
-      'transport' => Icons.directions_car_filled_outlined,
-      _ => Icons.category_outlined,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     final title = dayTitle(context, group.day);
@@ -339,9 +298,9 @@ class _DayGroupCard extends StatelessWidget {
           ...group.items.map(
             (e) => ExpenseTile(
               expense: e,
-              title: _categoryLabel(context, e.categoryId),
+              title: e.categoryId.toCategoryLabel(context),
               subtitle: e.note.isEmpty ? context.tr.no_note : e.note,
-              icon: _categoryIcon(e.categoryId),
+              icon: e.categoryId.toCategoryIcon(),
             ),
           ),
         ],

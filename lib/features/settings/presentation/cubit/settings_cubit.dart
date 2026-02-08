@@ -51,7 +51,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> resetAllSettings() async {
-    emit(state.copyWith(isResetting: true, actionMessage: null));
+    emit(state.copyWith(isResetting: true));
 
     try {
       await _resetAllSettingsUseCase(
@@ -75,7 +75,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> deleteAllExpenses() async {
-    emit(state.copyWith(isResetting: true, actionMessage: null));
+    emit(state.copyWith(isResetting: true));
     try {
       await _deleteAllExpensesUseCase();
       emit(
@@ -96,6 +96,6 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   // Call after showing snackbar to avoid repeating on rebuild.
   void clearActionMessage() {
-    emit(state.copyWith(actionMessage: null));
+    emit(state.copyWith());
   }
 }

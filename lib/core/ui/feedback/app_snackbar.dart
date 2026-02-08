@@ -45,7 +45,7 @@ class AppSnackBar {
   }
 
   static void info(BuildContext context, String message) {
-    show(context, message: message, type: AppSnackBarType.info);
+    show(context, message: message);
   }
 
   static Color _bg(BuildContext context, AppSnackBarType type) {

@@ -8,7 +8,7 @@ class ExpensesState extends Equatable {
   final double todayTotal;
   final int todayCount;
 
-  final List<ExpensesDayGroup> groups;
+  final List<ExpensesDayGroup> expensesDayGroups;
   final List<TopCategoryItem> topCategories;
 
   const ExpensesState({
@@ -16,7 +16,7 @@ class ExpensesState extends Equatable {
     required this.error,
     required this.todayTotal,
     required this.todayCount,
-    required this.groups,
+    required this.expensesDayGroups,
     required this.topCategories,
   });
 
@@ -25,7 +25,7 @@ class ExpensesState extends Equatable {
     error: null,
     todayTotal: 0,
     todayCount: 0,
-    groups: [],
+    expensesDayGroups: [],
     topCategories: [],
   );
 
@@ -34,7 +34,7 @@ class ExpensesState extends Equatable {
     String? error,
     double? todayTotal,
     int? todayCount,
-    List<ExpensesDayGroup>? groups,
+    List<ExpensesDayGroup>? expensesDayGroups,
     List<TopCategoryItem>? topCategories,
   }) {
     return ExpensesState(
@@ -42,7 +42,7 @@ class ExpensesState extends Equatable {
       error: error,
       todayTotal: todayTotal ?? this.todayTotal,
       todayCount: todayCount ?? this.todayCount,
-      groups: groups ?? this.groups,
+      expensesDayGroups: expensesDayGroups ?? this.expensesDayGroups,
       topCategories: topCategories ?? this.topCategories,
     );
   }
@@ -53,7 +53,7 @@ class ExpensesState extends Equatable {
     error,
     todayTotal,
     todayCount,
-    groups,
+    expensesDayGroups,
     topCategories,
   ];
 }

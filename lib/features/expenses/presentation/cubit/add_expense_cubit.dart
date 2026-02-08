@@ -23,19 +23,19 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   void setAmount(String input) {
     final value = double.tryParse(input.replaceAll(',', '.'));
-    emit(state.copyWith(amount: value, errorMessage: null));
+    emit(state.copyWith(amount: value));
   }
 
   void setCategory(String id) {
-    emit(state.copyWith(categoryId: id, errorMessage: null));
+    emit(state.copyWith(categoryId: id));
   }
 
   void setNote(String note) {
-    emit(state.copyWith(note: note, errorMessage: null));
+    emit(state.copyWith(note: note));
   }
 
   void setDate(DateTime date) {
-    emit(state.copyWith(date: date, errorMessage: null));
+    emit(state.copyWith(date: date));
   }
 
   Future<bool> submit() async {
@@ -44,7 +44,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       return false;
     }
 
-    emit(state.copyWith(isSubmitting: true, errorMessage: null));
+    emit(state.copyWith(isSubmitting: true));
 
     try {
       final expense = Expense(
@@ -69,5 +69,5 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     }
   }
 
-  void clearMessage() => emit(state.copyWith(errorMessage: null));
+  void clearMessage() => emit(state.copyWith());
 }

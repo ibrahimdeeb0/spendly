@@ -44,14 +44,34 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<ExpensesRepo>(() => ExpensesRepoImpl(getIt()));
 
   // Expenses - usecases
-  getIt.registerLazySingleton(() => GetAllExpensesUseCase(getIt()));
-  getIt.registerLazySingleton(() => AddExpenseUseCase(getIt()));
-  getIt.registerLazySingleton(() => DeleteExpenseUseCase(getIt()));
-  getIt.registerLazySingleton(() => DeleteAllExpensesUseCase(getIt()));
-  getIt.registerLazySingleton(() => UpdateExpenseUseCase(getIt()));
+  getIt.registerLazySingleton(
+    () => GetAllExpensesUseCase(getIt<ExpensesRepo>()),
+  );
+  getIt.registerLazySingleton(
+    () => WatchAllExpensesUseCase(getIt<ExpensesRepo>()),
+  );
+  getIt.registerLazySingleton(() => AddExpenseUseCase(getIt<ExpensesRepo>()));
+  getIt.registerLazySingleton(
+    () => DeleteExpenseUseCase(getIt<ExpensesRepo>()),
+  );
+  getIt.registerLazySingleton(
+    () => DeleteAllExpensesUseCase(getIt<ExpensesRepo>()),
+  );
+  getIt.registerLazySingleton(
+    () => UpdateExpenseUseCase(getIt<ExpensesRepo>()),
+  );
   getIt.registerLazySingleton(() => ResetAllSettingsUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetExpensesOverviewUseCase());
 
   // Add Expense Cubit
-  getIt.registerFactory(() => ExpensesCubit(getIt(), getIt(), getIt()));
+  getIt.registerFactory(
+    () => ExpensesCubit(
+      getIt(), // GetExpensesOverviewUseCase
+      getIt(), // GetAllExpensesUseCase
+      getIt(), // WatchAllExpensesUseCase
+      getIt(), // DeleteExpenseUseCase
+      getIt(), // DeleteAllExpensesUseCase
+    ),
+  );
   getIt.registerFactory(() => AddExpenseCubit(getIt(), getIt()));
 }

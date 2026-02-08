@@ -31,6 +31,11 @@ class ExpensesRepoImpl implements ExpensesRepo {
   }
 
   @override
+  Stream<List<Expense>> watchAllExpenses() {
+    return ds.watchExpenses().map((models) => models.map(_toEntity).toList());
+  }
+
+  @override
   Future<void> updateExpense(Expense expense) =>
       ds.updateExpense(_toModel(expense));
 

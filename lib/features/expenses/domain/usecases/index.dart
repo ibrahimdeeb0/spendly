@@ -4,3 +4,5 @@ export 'get_all_expenses.dart';
 export 'update_expense.dart';
 export 'delete_expense.dart';
 export 'delete_all_expenses.dart';
+export 'get_expenses_overview.dart';
+export 'watch_all_expenses.dart';
