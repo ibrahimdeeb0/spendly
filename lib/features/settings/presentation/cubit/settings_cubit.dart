@@ -66,11 +66,16 @@ class SettingsCubit extends Cubit<SettingsState> {
           locale: 'ar',
           currency: 'USD',
           isResetting: false,
-          actionMessage: 'RESET_SUCCESS',
+          actionMessage: const AppMessage.success(AppMessageKey.resetSuccess),
         ),
       );
     } catch (_) {
-      emit(state.copyWith(isResetting: false, actionMessage: 'RESET_FAILED'));
+      emit(
+        state.copyWith(
+          isResetting: false,
+          actionMessage: const AppMessage.error(AppMessageKey.resetFailed),
+        ),
+      );
     }
   }
 
@@ -81,14 +86,18 @@ class SettingsCubit extends Cubit<SettingsState> {
       emit(
         state.copyWith(
           isResetting: false,
-          actionMessage: 'DELETE_EXPENSES_SUCCESS',
+          actionMessage: const AppMessage.success(
+            AppMessageKey.deleteExpensesSuccess,
+          ),
         ),
       );
     } catch (_) {
       emit(
         state.copyWith(
           isResetting: false,
-          actionMessage: 'DELETE_EXPENSES_FAILED',
+          actionMessage: const AppMessage.error(
+            AppMessageKey.deleteExpensesFailed,
+          ),
         ),
       );
     }

@@ -57,15 +57,12 @@ class _FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AddExpenseCubit, AddExpenseState>(
-      listenWhen: (p, c) => p.errorMessage != c.errorMessage,
+      listenWhen: (p, c) => p.message != c.message,
       listener: (context, state) {
-        if (state.errorMessage == null) return;
+        final message = state.message;
+        if (message == null) return;
 
-        final msg = switch (state.errorMessage) {
-          'INVALID_AMOUNT' => context.tr.invalid_amount,
-          _ => context.tr.saved_failed,
-        };
-        AppSnackBar.error(context, msg);
+        message.show(context);
         context.read<AddExpenseCubit>().clearMessage();
       },
       child: ListView(

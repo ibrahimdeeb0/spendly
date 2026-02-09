@@ -3,7 +3,7 @@ import 'package:spendly/general_exports.dart';
 
 class ExpensesState extends Equatable {
   final bool isLoading;
-  final String? error;
+  final AppMessage? error;
 
   final double todayTotal;
   final int todayCount;
@@ -31,7 +31,7 @@ class ExpensesState extends Equatable {
 
   ExpensesState copyWith({
     bool? isLoading,
-    String? error,
+    AppMessage? error,
     double? todayTotal,
     int? todayCount,
     List<ExpensesDayGroup>? expensesDayGroups,

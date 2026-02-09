@@ -10,24 +10,10 @@ class SettingsPage extends StatelessWidget {
       body: BlocListener<SettingsCubit, SettingsState>(
         listenWhen: (prev, curr) => prev.actionMessage != curr.actionMessage,
         listener: (context, state) {
-          if (state.actionMessage == null) return;
+          final message = state.actionMessage;
+          if (message == null) return;
 
-          final msg = switch (state.actionMessage) {
-            'RESET_SUCCESS' => context.tr.reset_data_success_message,
-            'DELETE_EXPENSES_SUCCESS' => context.tr.delete_all_expenses_success,
-            'DELETE_EXPENSES_FAILED' => context.tr.something_went_wrong,
-            _ => context.tr.reset_failed,
-          };
-
-          final isSuccess =
-              state.actionMessage == 'RESET_SUCCESS' ||
-              state.actionMessage == 'DELETE_EXPENSES_SUCCESS';
-
-          if (isSuccess) {
-            AppSnackBar.success(context, msg);
-          } else {
-            AppSnackBar.error(context, msg);
-          }
+          message.show(context);
 
           context.read<SettingsCubit>().clearActionMessage();
         },

@@ -1,3 +1,5 @@
+import 'package:spendly/core/ui/feedback/app_message.dart';
+
 class AddExpenseState {
   final String? editingId; // null = add, not null = edit
   final double? amount;
@@ -5,7 +7,7 @@ class AddExpenseState {
   final String note;
   final DateTime date;
   final bool isSubmitting;
-  final String? errorMessage;
+  final AppMessage? message;
 
   const AddExpenseState({
     required this.editingId,
@@ -14,7 +16,7 @@ class AddExpenseState {
     required this.note,
     required this.date,
     required this.isSubmitting,
-    required this.errorMessage,
+    required this.message,
   });
 
   factory AddExpenseState.initial() => AddExpenseState(
@@ -24,7 +26,7 @@ class AddExpenseState {
     note: '',
     date: DateTime.now(),
     isSubmitting: false,
-    errorMessage: null,
+    message: null,
   );
 
   AddExpenseState copyWith({
@@ -34,7 +36,7 @@ class AddExpenseState {
     String? note,
     DateTime? date,
     bool? isSubmitting,
-    String? errorMessage,
+    AppMessage? message,
   }) {
     return AddExpenseState(
       editingId: editingId ?? this.editingId,
@@ -43,7 +45,7 @@ class AddExpenseState {
       note: note ?? this.note,
       date: date ?? this.date,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      errorMessage: errorMessage,
+      message: message,
     );
   }
 }

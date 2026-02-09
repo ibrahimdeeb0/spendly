@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:spendly/core/ui/feedback/app_message.dart';
 
 class SettingsState extends Equatable {
   final bool isLoading;
@@ -8,7 +9,7 @@ class SettingsState extends Equatable {
 
   final String? appVersion; // e.g. "1.0.0 (10)"
   final bool isResetting; // UI loading on reset
-  final String? actionMessage; // success/error message (one-shot)
+  final AppMessage? actionMessage; // success/error message (one-shot)
 
   const SettingsState({
     required this.isLoading,
@@ -37,7 +38,7 @@ class SettingsState extends Equatable {
     String? currency,
     String? appVersion,
     bool? isResetting,
-    String? actionMessage,
+    AppMessage? actionMessage,
   }) {
     return SettingsState(
       isLoading: isLoading ?? this.isLoading,

@@ -28,7 +28,12 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       _processData(expenses);
     } catch (_) {
       if (!isClosed) {
-        emit(state.copyWith(isLoading: false, error: 'LOAD_FAILED'));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            error: const AppMessage.error(AppMessageKey.loadFailed),
+          ),
+        );
       }
     }
   }
@@ -47,7 +52,12 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       );
     } catch (_) {
       if (!isClosed) {
-        emit(state.copyWith(isLoading: false, error: 'LOAD_FAILED'));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            error: const AppMessage.error(AppMessageKey.loadFailed),
+          ),
+        );
       }
     }
   }
@@ -61,7 +71,12 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       (expenses) => _processData(expenses),
       onError: (_) {
         if (!isClosed) {
-          emit(state.copyWith(isLoading: false, error: 'LOAD_FAILED'));
+          emit(
+            state.copyWith(
+              isLoading: false,
+              error: const AppMessage.error(AppMessageKey.loadFailed),
+            ),
+          );
         }
       },
     );

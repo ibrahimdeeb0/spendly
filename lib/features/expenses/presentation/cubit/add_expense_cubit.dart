@@ -40,7 +40,11 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   Future<bool> submit() async {
     if (state.amount == null || state.amount! <= 0) {
-      emit(state.copyWith(errorMessage: 'INVALID_AMOUNT'));
+      emit(
+        state.copyWith(
+          message: const AppMessage.error(AppMessageKey.invalidAmount),
+        ),
+      );
       return false;
     }
 
@@ -64,7 +68,12 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       emit(state.copyWith(isSubmitting: false));
       return true;
     } catch (_) {
-      emit(state.copyWith(isSubmitting: false, errorMessage: 'SAVE_FAILED'));
+      emit(
+        state.copyWith(
+          isSubmitting: false,
+          message: const AppMessage.error(AppMessageKey.saveFailed),
+        ),
+      );
       return false;
     }
   }
