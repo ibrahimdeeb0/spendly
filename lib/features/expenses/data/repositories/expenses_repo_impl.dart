@@ -11,6 +11,7 @@ class ExpensesRepoImpl implements ExpensesRepo {
     categoryId: m.categoryId,
     note: m.note,
     createdAt: m.createdAt,
+    paymentMethod: PaymentMethodCodec.fromCode(m.paymentMethod),
   );
 
   ExpenseModel _toModel(Expense e) => ExpenseModel(
@@ -19,6 +20,7 @@ class ExpensesRepoImpl implements ExpensesRepo {
     categoryId: e.categoryId,
     note: e.note,
     createdAt: e.createdAt,
+    paymentMethod: e.paymentMethod.code,
   );
 
   @override

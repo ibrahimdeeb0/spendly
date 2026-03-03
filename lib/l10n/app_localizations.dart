@@ -236,6 +236,12 @@ abstract class AppLocalizations {
   /// **'Today\'s Total'**
   String get today_total;
 
+  /// No description provided for @range_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total ({range})'**
+  String range_total(Object range);
+
   /// No description provided for @transactions_count.
   ///
   /// In en, this message translates to:
@@ -307,6 +313,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount'**
   String get amount;
+
+  /// No description provided for @payment_method_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get payment_method_title;
+
+  /// No description provided for @payment_method_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get payment_method_cash;
+
+  /// No description provided for @payment_method_wallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get payment_method_wallet;
+
+  /// No description provided for @payment_method_transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get payment_method_transfer;
 
   /// No description provided for @category_title.
   ///

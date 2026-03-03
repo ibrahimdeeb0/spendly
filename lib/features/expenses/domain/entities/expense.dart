@@ -1,9 +1,12 @@
+import 'payment_method.dart';
+
 class Expense {
   final String id;
   final double amount;
   final String categoryId;
   final String note;
   final DateTime createdAt;
+  final PaymentMethod paymentMethod;
 
   const Expense({
     required this.id,
@@ -11,5 +14,6 @@ class Expense {
     required this.categoryId,
     required this.note,
     required this.createdAt,
+    required this.paymentMethod,
   });
 }

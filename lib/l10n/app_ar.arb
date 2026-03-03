@@ -50,6 +50,12 @@
     "@recent_expenses": {},
     "today_total": "إجمالي اليوم",
     "@today_total": {},
+    "range_total": "الإجمالي ({range})",
+    "@range_total": {
+      "placeholders": {
+        "range": {}
+      }
+    },
     "transactions_count": "عدد العمليات {Count}",
     "@transactions_count": {
         "placeholders": {
@@ -78,6 +84,14 @@
     "@add_expense_title": {},
     "amount": "المبلغ",
     "@amount": {},
+    "payment_method_title": "طريقة الدفع",
+    "@payment_method_title": {},
+    "payment_method_cash": "نقداً",
+    "@payment_method_cash": {},
+    "payment_method_wallet": "محفظة",
+    "@payment_method_wallet": {},
+    "payment_method_transfer": "تحويل",
+    "@payment_method_transfer": {},
     "category_title": "الفئة",
     "@category_title": {},
     "note": "ملاحظة",

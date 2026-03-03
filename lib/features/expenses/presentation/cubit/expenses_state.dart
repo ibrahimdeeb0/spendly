@@ -1,12 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:spendly/general_exports.dart';
 
+enum ExpensesRange { day, week, month }
+
 class ExpensesState extends Equatable {
   final bool isLoading;
   final AppMessage? error;
 
-  final double todayTotal;
-  final int todayCount;
+  final double rangeTotal;
+  final int rangeCount;
+  final ExpensesRange range;
 
   final List<ExpensesDayGroup> expensesDayGroups;
   final List<TopCategoryItem> topCategories;
@@ -14,8 +17,9 @@ class ExpensesState extends Equatable {
   const ExpensesState({
     required this.isLoading,
     required this.error,
-    required this.todayTotal,
-    required this.todayCount,
+    required this.rangeTotal,
+    required this.rangeCount,
+    required this.range,
     required this.expensesDayGroups,
     required this.topCategories,
   });
@@ -23,8 +27,9 @@ class ExpensesState extends Equatable {
   factory ExpensesState.initial() => const ExpensesState(
     isLoading: true,
     error: null,
-    todayTotal: 0,
-    todayCount: 0,
+    rangeTotal: 0,
+    rangeCount: 0,
+    range: ExpensesRange.day,
     expensesDayGroups: [],
     topCategories: [],
   );
@@ -32,16 +37,18 @@ class ExpensesState extends Equatable {
   ExpensesState copyWith({
     bool? isLoading,
     AppMessage? error,
-    double? todayTotal,
-    int? todayCount,
+    double? rangeTotal,
+    int? rangeCount,
+    ExpensesRange? range,
     List<ExpensesDayGroup>? expensesDayGroups,
     List<TopCategoryItem>? topCategories,
   }) {
     return ExpensesState(
       isLoading: isLoading ?? this.isLoading,
       error: error,
-      todayTotal: todayTotal ?? this.todayTotal,
-      todayCount: todayCount ?? this.todayCount,
+      rangeTotal: rangeTotal ?? this.rangeTotal,
+      rangeCount: rangeCount ?? this.rangeCount,
+      range: range ?? this.range,
       expensesDayGroups: expensesDayGroups ?? this.expensesDayGroups,
       topCategories: topCategories ?? this.topCategories,
     );
@@ -51,8 +58,9 @@ class ExpensesState extends Equatable {
   List<Object?> get props => [
     isLoading,
     error,
-    todayTotal,
-    todayCount,
+    rangeTotal,
+    rangeCount,
+    range,
     expensesDayGroups,
     topCategories,
   ];

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:spendly/general_exports.dart';
 
 class HomePage extends StatelessWidget {
@@ -44,7 +45,7 @@ class _MobileLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const _SummaryCard(),
+        const _HeaderCard(),
         SizedBox(height: context.tokens.s16),
         const _TopCategoriesCard(),
         SizedBox(height: context.tokens.s20),
@@ -71,7 +72,7 @@ class _TabletLayout extends StatelessWidget {
           flex: 5,
           child: ListView(
             children: [
-              const _SummaryCard(),
+              const _HeaderCard(),
               SizedBox(height: context.tokens.s16),
               const _TopCategoriesCard(),
             ],
@@ -96,44 +97,51 @@ class _TabletLayout extends StatelessWidget {
   }
 }
 
-class _SummaryCard extends StatelessWidget {
-  const _SummaryCard();
+class _HeaderCard extends StatelessWidget {
+  const _HeaderCard();
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ExpensesCubit, ExpensesState, (double, int)>(
-      selector: (state) => (state.todayTotal, state.todayCount),
+    return BlocBuilder<ExpensesCubit, ExpensesState>(
+      buildWhen: (oldState, newState) =>
+          oldState.rangeTotal != newState.rangeTotal ||
+          oldState.rangeCount != newState.rangeCount ||
+          oldState.range != newState.range,
       builder: (context, state) {
-        final todayTotal = state.$1;
-        final todayCount = state.$2;
+        final rangeTotal = state.rangeTotal;
+        final rangeCount = state.rangeCount;
+        final rangeLabel = _rangeLabel(context, state.range);
         return AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              _HeaderTopRow(
+                range: state.range,
+                onChanged: (r) => context.read<ExpensesCubit>().setRange(r),
+              ),
+              SizedBox(height: context.tokens.s8),
               Text(
-                context.tr.today_total,
+                rangeTotal.formatMoney(context),
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+              SizedBox(height: context.tokens.s8),
+              Text(
+                context.tr.range_total(rangeLabel),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,
                   ).colorScheme.onSurface.colorWithOpacity(0.7),
                 ),
               ),
-              SizedBox(height: context.tokens.s8),
+              SizedBox(height: context.tokens.s4),
               Text(
-                todayTotal.formatMoney(context),
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              SizedBox(height: context.tokens.s8),
-              Text(
-                context.tr.transactions_count(todayCount),
+                context.tr.transactions_count(rangeCount),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(
                     context,
                   ).colorScheme.onSurface.colorWithOpacity(0.6),
                 ),
               ),
-              SizedBox(height: context.tokens.s16),
-              _RangeChips(selected: 'day', onChanged: (v) {}),
             ],
           ),
         );
@@ -142,23 +150,92 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-class _RangeChips extends StatelessWidget {
-  final String selected; // day/week/month
-  final ValueChanged<String> onChanged;
+class _HeaderTopRow extends StatelessWidget {
+  final ExpensesRange range;
+  final ValueChanged<ExpensesRange> onChanged;
 
-  const _RangeChips({required this.selected, required this.onChanged});
+  const _HeaderTopRow({required this.range, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
-    return SegmentedButton<String>(
-      segments: [
-        ButtonSegment(value: 'day', label: Text(context.tr.day)),
-        ButtonSegment(value: 'week', label: Text(context.tr.week)),
-        ButtonSegment(value: 'month', label: Text(context.tr.month)),
+    final now = DateTime.now();
+    final locale = Localizations.localeOf(context).toString();
+    final date = DateFormat('EEE d MMM', locale).format(now);
+
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(date, style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                context.tr.today,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.colorWithOpacity(0.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+        _RangeDropdown(range: range, onChanged: onChanged),
       ],
-      selected: {selected},
-      onSelectionChanged: (set) => onChanged(set.first),
     );
+  }
+}
+
+class _RangeDropdown extends StatelessWidget {
+  final ExpensesRange range;
+  final ValueChanged<ExpensesRange> onChanged;
+
+  const _RangeDropdown({required this.range, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(context.tokens.rLg),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.tokens.s12,
+          vertical: context.tokens.s4,
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<ExpensesRange>(
+            value: range,
+            borderRadius: BorderRadius.circular(context.tokens.rLg),
+            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+            items: ExpensesRange.values
+                .map(
+                  (r) => DropdownMenuItem(
+                    value: r,
+                    child: Text(_rangeLabel(context, r)),
+                  ),
+                )
+                .toList(),
+            onChanged: (v) {
+              if (v != null) onChanged(v);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String _rangeLabel(BuildContext context, ExpensesRange range) {
+  switch (range) {
+    case ExpensesRange.day:
+      return context.tr.day;
+    case ExpensesRange.week:
+      return context.tr.week;
+    case ExpensesRange.month:
+      return context.tr.month;
   }
 }
 

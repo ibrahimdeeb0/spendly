@@ -50,6 +50,12 @@
     "@recent_expenses": {},
     "today_total": "Today's Total",
     "@today_total": {},
+    "range_total": "Total ({range})",
+    "@range_total": {
+      "placeholders": {
+        "range": {}
+      }
+    },
     "transactions_count": "Transactions {Count}",
     "@transactions_count": {
         "placeholders": {
@@ -78,6 +84,14 @@
     "@add_expense_title": {},
     "amount": "Amount",
     "@amount": {},
+    "payment_method_title": "Payment method",
+    "@payment_method_title": {},
+    "payment_method_cash": "Cash",
+    "@payment_method_cash": {},
+    "payment_method_wallet": "Wallet",
+    "@payment_method_wallet": {},
+    "payment_method_transfer": "Transfer",
+    "@payment_method_transfer": {},
     "category_title": "Category",
     "@category_title": {},
     "note": "Note",

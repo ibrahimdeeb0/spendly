@@ -19,11 +19,15 @@ class ExpenseModel extends HiveObject {
   @HiveField(4)
   final DateTime createdAt;
 
+  @HiveField(5)
+  final String paymentMethod;
+
   ExpenseModel({
     required this.id,
     required this.amount,
     required this.categoryId,
     required this.note,
     required this.createdAt,
+    required this.paymentMethod,
   });
 }

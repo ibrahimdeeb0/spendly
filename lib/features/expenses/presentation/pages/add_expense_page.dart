@@ -69,6 +69,8 @@ class _FormState extends State<_Form> {
         children: [
           AmountCard(controller: _amountCtrl),
           SizedBox(height: context.tokens.s12),
+          const PaymentMethodCard(),
+          SizedBox(height: context.tokens.s12),
           const CategoryCard(),
           SizedBox(height: context.tokens.s12),
           NoteCard(controller: _noteCtrl),

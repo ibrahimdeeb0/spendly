@@ -82,6 +82,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get today_total => 'Today\'s Total';
 
   @override
+  String range_total(Object range) {
+    return 'Total ($range)';
+  }
+
+  @override
   String transactions_count(Object Count) {
     return 'Transactions $Count';
   }
@@ -118,6 +123,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get amount => 'Amount';
+
+  @override
+  String get payment_method_title => 'Payment method';
+
+  @override
+  String get payment_method_cash => 'Cash';
+
+  @override
+  String get payment_method_wallet => 'Wallet';
+
+  @override
+  String get payment_method_transfer => 'Transfer';
 
   @override
   String get category_title => 'Category';

@@ -21,14 +21,14 @@ class TopCategoryItem {
 
 class ExpensesOverview {
   final List<ExpensesDayGroup> groups;
-  final int todayCount;
-  final double todayTotal;
+  final int totalCount;
+  final double totalAmount;
   final List<TopCategoryItem> topCategories;
 
   const ExpensesOverview(
     this.groups,
-    this.todayCount,
-    this.todayTotal,
+    this.totalCount,
+    this.totalAmount,
     this.topCategories,
   );
 }

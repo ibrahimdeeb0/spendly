@@ -82,6 +82,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get today_total => 'إجمالي اليوم';
 
   @override
+  String range_total(Object range) {
+    return 'الإجمالي ($range)';
+  }
+
+  @override
   String transactions_count(Object Count) {
     return 'عدد العمليات $Count';
   }
@@ -118,6 +123,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get amount => 'المبلغ';
+
+  @override
+  String get payment_method_title => 'طريقة الدفع';
+
+  @override
+  String get payment_method_cash => 'نقداً';
+
+  @override
+  String get payment_method_wallet => 'محفظة';
+
+  @override
+  String get payment_method_transfer => 'تحويل';
 
   @override
   String get category_title => 'الفئة';

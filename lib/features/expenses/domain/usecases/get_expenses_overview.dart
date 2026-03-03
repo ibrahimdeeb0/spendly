@@ -11,19 +11,10 @@ class GetExpensesOverviewUseCase {
     // group by day
     final groups = _groupByDay(expenses);
 
-    final today = DateTime.now();
-    final todayKey = DateTime(today.year, today.month, today.day);
-
-    // calculate expenses for today
-    final todayItems = expenses.where((e) {
-      final d = DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day);
-      return d == todayKey;
-    }).toList();
-
-    final todayTotal = todayItems.fold<double>(0, (s, e) => s + e.amount);
+    final totalAmount = expenses.fold<double>(0, (s, e) => s + e.amount);
     final topCats = _topCategories(expenses);
 
-    return ExpensesOverview(groups, todayItems.length, todayTotal, topCats);
+    return ExpensesOverview(groups, expenses.length, totalAmount, topCats);
   }
 
   List<ExpensesDayGroup> _groupByDay(List<Expense> items) {

@@ -17,6 +17,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
         categoryId: expense.categoryId,
         note: expense.note,
         date: expense.createdAt,
+        paymentMethod: expense.paymentMethod,
       ),
     );
   }
@@ -38,6 +39,10 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     emit(state.copyWith(date: date));
   }
 
+  void setPaymentMethod(PaymentMethod method) {
+    emit(state.copyWith(paymentMethod: method));
+  }
+
   Future<bool> submit() async {
     if (state.amount == null || state.amount! <= 0) {
       emit(
@@ -57,6 +62,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
         categoryId: state.categoryId,
         note: state.note.trim(),
         createdAt: state.date,
+        paymentMethod: state.paymentMethod,
       );
 
       if (state.editingId == null) {
