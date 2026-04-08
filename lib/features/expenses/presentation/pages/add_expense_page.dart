@@ -7,7 +7,8 @@ class AddExpensePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<AddExpenseCubit>()..initWith(initialExpense),
+      create: (_) =>
+          getIt<AddExpenseBloc>()..add(AddExpenseStarted(initialExpense)),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -41,10 +42,8 @@ class _FormState extends State<_Form> {
   @override
   void initState() {
     super.initState();
-    final state = context.read<AddExpenseCubit>().state;
-
-    _amountCtrl = TextEditingController(text: state.amount?.toString() ?? '');
-    _noteCtrl = TextEditingController(text: state.note);
+    _amountCtrl = TextEditingController();
+    _noteCtrl = TextEditingController();
   }
 
   @override
@@ -54,16 +53,42 @@ class _FormState extends State<_Form> {
     super.dispose();
   }
 
+  void _syncControllers(AddExpenseFormData formData) {
+    if (_amountCtrl.text != formData.amountInput) {
+      _amountCtrl.value = _amountCtrl.value.copyWith(
+        text: formData.amountInput,
+        selection: TextSelection.collapsed(offset: formData.amountInput.length),
+        composing: TextRange.empty,
+      );
+    }
+
+    if (_noteCtrl.text != formData.note) {
+      _noteCtrl.value = _noteCtrl.value.copyWith(
+        text: formData.note,
+        selection: TextSelection.collapsed(offset: formData.note.length),
+        composing: TextRange.empty,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddExpenseCubit, AddExpenseState>(
-      listenWhen: (p, c) => p.message != c.message,
+    return BlocListener<AddExpenseBloc, AddExpenseState>(
       listener: (context, state) {
-        final message = state.message;
-        if (message == null) return;
+        final formData = state.formData;
+        if (formData != null) {
+          _syncControllers(formData);
+        }
 
-        message.show(context);
-        context.read<AddExpenseCubit>().clearMessage();
+        if (state is AddExpenseFailure) {
+          state.message.show(context);
+          return;
+        }
+
+        if (state is AddExpenseSuccess) {
+          AppSnackBar.success(context, context.tr.saved_success_fully);
+          Navigator.pop(context, true);
+        }
       },
       child: ListView(
         children: [

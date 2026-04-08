@@ -18,7 +18,9 @@ class AmountCard extends StatelessWidget {
           TextField(
             controller: controller,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onChanged: context.read<AddExpenseCubit>().setAmount,
+            onChanged: (value) {
+              context.read<AddExpenseBloc>().add(AmountChanged(value));
+            },
             decoration: const InputDecoration(hintText: '0.00'),
           ),
         ],

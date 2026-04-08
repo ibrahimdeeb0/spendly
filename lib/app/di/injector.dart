@@ -63,15 +63,21 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => ResetAllSettingsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetExpensesOverviewUseCase());
 
-  // Add Expense Cubit
-  getIt.registerFactory(
-    () => ExpensesCubit(
-      getIt(), // GetExpensesOverviewUseCase
-      getIt(), // GetAllExpensesUseCase
-      getIt(), // WatchAllExpensesUseCase
-      getIt(), // DeleteExpenseUseCase
-      getIt(), // DeleteAllExpensesUseCase
+  // Expenses - bloc
+  getIt.registerFactory<ExpensesBloc>(
+    () => ExpensesBloc(
+      getIt<GetExpensesOverviewUseCase>(),
+      getIt<GetAllExpensesUseCase>(),
+      getIt<WatchAllExpensesUseCase>(),
+      getIt<DeleteExpenseUseCase>(),
+      getIt<DeleteAllExpensesUseCase>(),
     ),
   );
-  getIt.registerFactory(() => AddExpenseCubit(getIt(), getIt()));
+
+  getIt.registerFactory<AddExpenseBloc>(
+    () => AddExpenseBloc(
+      getIt<AddExpenseUseCase>(),
+      getIt<UpdateExpenseUseCase>(),
+    ),
+  );
 }

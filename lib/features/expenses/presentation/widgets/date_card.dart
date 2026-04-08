@@ -14,8 +14,9 @@ class DateCard extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          BlocSelector<AddExpenseCubit, AddExpenseState, DateTime>(
-            selector: (s) => s.date,
+          BlocSelector<AddExpenseBloc, AddExpenseState, DateTime>(
+            selector: (state) =>
+                state.formData?.date ?? AddExpenseFormData.initial().date,
             builder: (context, date) {
               return TextButton(
                 onPressed: () async {
@@ -26,7 +27,7 @@ class DateCard extends StatelessWidget {
                     lastDate: DateTime.now().add(const Duration(days: 365)),
                   );
                   if (picked != null && context.mounted) {
-                    context.read<AddExpenseCubit>().setDate(picked);
+                    context.read<AddExpenseBloc>().add(DateChanged(picked));
                   }
                 },
                 child: Text('${date.year}-${date.month}-${date.day}'),

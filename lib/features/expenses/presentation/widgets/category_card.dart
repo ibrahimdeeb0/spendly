@@ -14,8 +14,10 @@ class CategoryCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(height: context.tokens.s12),
-          BlocSelector<AddExpenseCubit, AddExpenseState, String>(
-            selector: (s) => s.categoryId,
+          BlocSelector<AddExpenseBloc, AddExpenseState, String>(
+            selector: (state) =>
+                state.formData?.categoryId ??
+                AddExpenseFormData.initial().categoryId,
             builder: (context, categoryId) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -39,8 +41,11 @@ class CategoryCard extends StatelessWidget {
                     ),
                   ],
                   selected: {categoryId},
-                  onSelectionChanged: (set) =>
-                      context.read<AddExpenseCubit>().setCategory(set.first),
+                  onSelectionChanged: (set) {
+                    context.read<AddExpenseBloc>().add(
+                      CategoryChanged(set.first),
+                    );
+                  },
                 ),
               );
             },

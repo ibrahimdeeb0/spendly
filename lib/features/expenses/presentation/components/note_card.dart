@@ -15,7 +15,9 @@ class NoteCard extends StatelessWidget {
           TextField(
             controller: controller,
             maxLines: 3,
-            onChanged: context.read<AddExpenseCubit>().setNote,
+            onChanged: (value) {
+              context.read<AddExpenseBloc>().add(NoteChanged(value));
+            },
             decoration: InputDecoration(hintText: context.tr.note_hint),
           ),
         ],

@@ -4,14 +4,18 @@ import 'package:spendly/general_exports.dart';
 class ExpenseTile extends StatelessWidget {
   final Expense expense;
   final String title;
-  final String subtitle;
+  final String note;
   final IconData icon;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   const ExpenseTile({
     required this.expense,
     required this.title,
-    required this.subtitle,
+    required this.note,
     required this.icon,
+    required this.onEdit,
+    required this.onDelete,
     super.key,
   });
 
@@ -34,35 +38,32 @@ class ExpenseTile extends StatelessWidget {
           Expanded(
             child: Text(title, style: Theme.of(context).textTheme.bodyLarge),
           ),
-          PopupMenuButton<String>(
-            onSelected: (v) async {
-              if (v == 'edit') {
-                final updated = await Navigator.pushNamed(
-                  context,
-                  AppRoutes.addExpense,
-                  arguments: AddExpenseRouteArgs(expense: expense),
-                );
-
-                if (updated == true && context.mounted) {
-                  context.read<ExpensesCubit>().load();
-                }
-              } else if (v == 'delete') {
-                AppSnackBar.success(
-                  context,
-                  context.tr.expense_deleted_successfully,
-                );
-                await context.read<ExpensesCubit>().deleteExpense(expense.id);
+          PopupMenuButton<_ExpenseTileAction>(
+            onSelected: (action) {
+              switch (action) {
+                case _ExpenseTileAction.edit:
+                  onEdit();
+                  break;
+                case _ExpenseTileAction.delete:
+                  onDelete();
+                  break;
               }
             },
             itemBuilder: (_) => [
-              PopupMenuItem(value: 'edit', child: Text(context.tr.edit)),
-              PopupMenuItem(value: 'delete', child: Text(context.tr.delete)),
+              PopupMenuItem(
+                value: _ExpenseTileAction.edit,
+                child: Text(context.tr.edit),
+              ),
+              PopupMenuItem(
+                value: _ExpenseTileAction.delete,
+                child: Text(context.tr.delete),
+              ),
             ],
           ),
         ],
       ),
       subtitle: _TileBody(
-        note: subtitle,
+        note: note,
         amountLabel: expense.amount.formatMoney(context),
         dayLabel: day,
         yearLabel: year,
@@ -71,6 +72,8 @@ class ExpenseTile extends StatelessWidget {
     );
   }
 }
+
+enum _ExpenseTileAction { edit, delete }
 
 class _TileBody extends StatelessWidget {
   final String note;
@@ -157,9 +160,9 @@ IconData _paymentMethodIcon(PaymentMethod method) {
 
 String _dateLocale(BuildContext context) {
   final locale = Localizations.localeOf(context);
-  final tag = locale.toLanguageTag(); // e.g. "ar", "en-US"
+  final tag = locale.toLanguageTag();
   if (tag.startsWith('ar')) {
-    return '$tag-u-nu-latn'; // Arabic day names, Latin digits
+    return '$tag-u-nu-latn';
   }
   return tag;
 }
