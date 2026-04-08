@@ -8,7 +8,7 @@ class AddExpensePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          getIt<AddExpenseBloc>()..add(AddExpenseStarted(initialExpense)),
+          sl<AddExpenseBloc>()..add(AddExpenseStarted(initialExpense)),
       child: Scaffold(
         appBar: AppBar(
           title: Text(

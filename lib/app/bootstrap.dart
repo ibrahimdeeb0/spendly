@@ -9,7 +9,7 @@ Future<void> bootstrap() async {
   // if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(ExpenseModelAdapter());
 
   // DI init
-  await configureDependencies();
+  await initServiceLocator();
 
   runApp(const ExpenseTrackerApp());
 }
