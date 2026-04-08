@@ -1,4 +1,8 @@
 export 'category_card.dart';
 export 'date_card.dart';
+export 'expenses_header_card.dart';
+export 'expenses_list.dart';
+export 'home_content.dart';
 export 'payment_method_card.dart';
 export 'submit_button.dart';
+export 'top_categories_card.dart';

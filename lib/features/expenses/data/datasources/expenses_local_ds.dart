@@ -24,6 +24,7 @@ class ExpensesLocalDataSource {
     final box = await _box();
     yield box.values.toList();
     yield* box.watch().map((_) => box.values.toList());
+   
   }
 
   Future<void> updateExpense(ExpenseModel model) async {

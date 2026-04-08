@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:spendly/features/expenses/presentation/bloc/expenses_bloc.dart';
 
 import '../../general_exports.dart';
 
@@ -63,15 +64,26 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => ResetAllSettingsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetExpensesOverviewUseCase());
 
-  // Add Expense Cubit
-  getIt.registerFactory(
-    () => ExpensesCubit(
-      getIt(), // GetExpensesOverviewUseCase
-      getIt(), // GetAllExpensesUseCase
-      getIt(), // WatchAllExpensesUseCase
-      getIt(), // DeleteExpenseUseCase
-      getIt(), // DeleteAllExpensesUseCase
+  // Expenses - bloc
+  getIt.registerFactory<ExpensesBloc>(
+    () => ExpensesBloc(
+      getIt<GetExpensesOverviewUseCase>(),
+      getIt<GetAllExpensesUseCase>(),
+      getIt<WatchAllExpensesUseCase>(),
+      getIt<DeleteExpenseUseCase>(),
+      getIt<DeleteAllExpensesUseCase>(),
     ),
   );
-  getIt.registerFactory(() => AddExpenseCubit(getIt(), getIt()));
+
+  // Add Expense Cubit
+  // getIt.registerFactory(
+  //   () => ExpensesCubit(
+  //     getIt(), // GetExpensesOverviewUseCase
+  //     getIt(), // GetAllExpensesUseCase
+  //     getIt(), // WatchAllExpensesUseCase
+  //     getIt(), // DeleteExpenseUseCase
+  //     getIt(), // DeleteAllExpensesUseCase
+  //   ),
+  // );
+  // getIt.registerFactory(() => AddExpenseCubit(getIt(), getIt()));
 }

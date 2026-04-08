@@ -1,5 +1,6 @@
 import 'package:spendly/l10n/app_localizations.dart';
 
+import '../features/expenses/presentation/bloc/expenses_bloc.dart';
 import '../general_exports.dart';
 
 class ExpenseTrackerApp extends StatelessWidget {
@@ -27,7 +28,8 @@ class ExpenseTrackerApp extends StatelessWidget {
             theme: theme,
             onGenerateRoute: AppRouter.onGenerateRoute,
             home: BlocProvider(
-              create: (_) => getIt<ExpensesCubit>()..load(),
+              create: (_) =>
+                  getIt<ExpensesBloc>()..add(const ExpensesStarted()),
               child: const HomePage(),
             ),
           );
