@@ -1,7 +1,5 @@
 import 'package:spendly/general_exports.dart';
 
-import '../bloc/expenses_bloc.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -14,11 +12,11 @@ class HomePage extends StatelessWidget {
   }
 
   void _openSettings(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.settings);
+    context.push(SettingsRoutes.open());
   }
 
   void _openAddExpense(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.addExpense);
+    context.push(ExpensesRoutes.add());
   }
 
   @override

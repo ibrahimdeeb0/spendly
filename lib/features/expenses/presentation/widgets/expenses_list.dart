@@ -1,15 +1,12 @@
 import 'package:spendly/general_exports.dart';
 
-import '../bloc/expenses_bloc.dart';
-
 class ExpensesList extends StatelessWidget {
   const ExpensesList({super.key});
 
   void _onEditExpense(BuildContext context, Expense expense) {
-    Navigator.pushNamed(
-      context,
-      AppRoutes.addExpense,
-      arguments: AddExpenseRouteArgs(expense: expense),
+    context.push(
+      ExpensesRoutes.edit(),
+      extra: AddExpenseRouteExtra(expense: expense),
     );
   }
 

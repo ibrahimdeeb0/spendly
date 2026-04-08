@@ -58,13 +58,13 @@ class ConfirmDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () => context.pop(false),
           child: Text(cancelText),
         ),
         SizedBox(
           height: 44,
           child: ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => context.pop(true),
             style: ElevatedButton.styleFrom(
               backgroundColor: isDanger ? scheme.error : scheme.primary,
               foregroundColor: isDanger ? scheme.onError : scheme.onPrimary,

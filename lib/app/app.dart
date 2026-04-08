@@ -1,6 +1,4 @@
 import 'package:spendly/l10n/app_localizations.dart';
-
-import '../features/expenses/presentation/bloc/expenses_bloc.dart';
 import '../general_exports.dart';
 
 class ExpenseTrackerApp extends StatelessWidget {
@@ -15,7 +13,7 @@ class ExpenseTrackerApp extends StatelessWidget {
           final theme = state.isDark ? AppTheme.dark() : AppTheme.light();
           final locale = Locale(state.locale);
 
-          return MaterialApp(
+          return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             locale: locale,
             supportedLocales: AppLocalizations.supportedLocales,
@@ -26,12 +24,7 @@ class ExpenseTrackerApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             theme: theme,
-            onGenerateRoute: AppRouter.onGenerateRoute,
-            home: BlocProvider(
-              create: (_) =>
-                  getIt<ExpensesBloc>()..add(const ExpensesStarted()),
-              child: const HomePage(),
-            ),
+            routerConfig: AppRouter.routerConfig,
           );
         },
       ),
