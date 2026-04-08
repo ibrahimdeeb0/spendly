@@ -87,7 +87,7 @@ class _FormState extends State<_Form> {
 
         if (state is AddExpenseSuccess) {
           AppSnackBar.success(context, context.tr.saved_success_fully);
-          Navigator.pop(context, true);
+          context.pop(true);
         }
       },
       child: ListView(
