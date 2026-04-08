@@ -5,23 +5,16 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<AddExpenseCubit, AddExpenseState, bool>(
-      selector: (s) => s.isSubmitting,
+    return BlocSelector<AddExpenseBloc, AddExpenseState, bool>(
+      selector: (state) => state is AddExpenseSubmitting,
       builder: (context, loading) {
         return SizedBox(
           height: context.isTablet ? 52 : 48,
           child: ElevatedButton(
             onPressed: loading
                 ? null
-                : () async {
-                    final ok = await context.read<AddExpenseCubit>().submit();
-                    if (!ok || !context.mounted) return;
-
-                    AppSnackBar.success(
-                      context,
-                      context.tr.saved_success_fully,
-                    );
-                    Navigator.pop(context, true); // 🔥 refresh Home
+                : () {
+                    context.read<AddExpenseBloc>().add(const SubmitPressed());
                   },
             child: loading
                 ? const CircularProgressIndicator(strokeWidth: 2)

@@ -14,8 +14,10 @@ class PaymentMethodCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(height: context.tokens.s12),
-          BlocSelector<AddExpenseCubit, AddExpenseState, PaymentMethod>(
-            selector: (s) => s.paymentMethod,
+          BlocSelector<AddExpenseBloc, AddExpenseState, PaymentMethod>(
+            selector: (state) =>
+                state.formData?.paymentMethod ??
+                AddExpenseFormData.initial().paymentMethod,
             builder: (context, method) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -35,9 +37,11 @@ class PaymentMethodCard extends StatelessWidget {
                     ),
                   ],
                   selected: {method},
-                  onSelectionChanged: (set) => context
-                      .read<AddExpenseCubit>()
-                      .setPaymentMethod(set.first),
+                  onSelectionChanged: (set) {
+                    context.read<AddExpenseBloc>().add(
+                      PaymentMethodChanged(set.first),
+                    );
+                  },
                 ),
               );
             },
