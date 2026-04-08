@@ -7,7 +7,7 @@ class ExpenseTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<SettingsCubit>()..load(),
+      create: (_) => sl<SettingsCubit>()..load(),
       child: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {
           final theme = state.isDark ? AppTheme.dark() : AppTheme.light();

@@ -23,7 +23,7 @@ class ExpensesRouteFactory {
     return RouteConfig(
       routeType: AppRouteType.none,
       child: BlocProvider(
-        create: (_) => getIt<ExpensesBloc>()..add(const ExpensesStarted()),
+        create: (_) => sl<ExpensesBloc>()..add(const ExpensesStarted()),
         child: const HomePage(),
       ),
     );
