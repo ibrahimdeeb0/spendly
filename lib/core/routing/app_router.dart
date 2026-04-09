@@ -21,6 +21,10 @@ class AppRouter {
         path: ExpensesRoutes.editPath,
         pageBuilder: ExpensesRouteFactory.buildEditPage,
       ),
+      GoRoute(
+        path: ExpensesRoutes.detailsPath,
+        pageBuilder: ExpensesRouteFactory.buildExpenseDetailsPage,
+      ),
     ],
     errorPageBuilder: AppPageFactory.buildErrorPage,
   );

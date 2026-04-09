@@ -13,3 +13,16 @@ final class AddExpenseRouteExtra extends Equatable {
   @override
   List<Object?> get props => [expense];
 }
+
+final class ExpenseDetailsRouteExtra extends Equatable {
+  final Expense expense;
+
+  const ExpenseDetailsRouteExtra({required this.expense});
+
+  static ExpenseDetailsRouteExtra? tryParse(Object? extra) {
+    return extra is ExpenseDetailsRouteExtra ? extra : null;
+  }
+
+  @override
+  List<Object?> get props => [expense];
+}

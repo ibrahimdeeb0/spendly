@@ -493,6 +493,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get something_went_wrong;
+
+  /// No description provided for @expense_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Details'**
+  String get expense_details;
+
+  /// No description provided for @details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get details;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get payment_method;
+
+  /// No description provided for @deleting_expense.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting expense...'**
+  String get deleting_expense;
 }
 
 class _AppLocalizationsDelegate

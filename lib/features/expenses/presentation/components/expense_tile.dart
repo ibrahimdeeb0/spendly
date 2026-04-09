@@ -8,6 +8,7 @@ class ExpenseTile extends StatelessWidget {
   final IconData icon;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final VoidCallback onPressDetails;
 
   const ExpenseTile({
     required this.expense,
@@ -16,6 +17,7 @@ class ExpenseTile extends StatelessWidget {
     required this.icon,
     required this.onEdit,
     required this.onDelete,
+    required this.onPressDetails,
     super.key,
   });
 
@@ -28,7 +30,11 @@ class ExpenseTile extends StatelessWidget {
     final day = DateFormat('EEEE', locale).format(expense.createdAt);
 
     return ListTile(
-      contentPadding: EdgeInsets.zero,
+      onTap: onPressDetails,
+      contentPadding: EdgeInsets.all(context.tokens.s16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(context.tokens.rLg),
+      ),
       leading: CircleAvatar(
         backgroundColor: scheme.surfaceContainerHighest,
         child: Icon(icon, color: scheme.onSurface),

@@ -216,4 +216,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get something_went_wrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get expense_details => 'Expense Details';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get payment_method => 'Payment method';
+
+  @override
+  String get deleting_expense => 'Deleting expense...';
 }

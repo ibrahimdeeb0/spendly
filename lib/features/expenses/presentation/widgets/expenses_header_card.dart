@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:spendly/general_exports.dart';
 
-import '../bloc/expenses_bloc.dart';
+import '../bloc/expenses/expenses_bloc.dart';
 
 class ExpensesHeaderCard extends StatelessWidget {
   const ExpensesHeaderCard({super.key});

@@ -22,11 +22,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ExpensesBloc, ExpensesState>(
-      listenWhen: (previous, current) =>
-          current is ExpensesFailure && previous != current,
-      listener: (context, state) {
-        final failure = state as ExpensesFailure;
-        _showErrorSnackBar(context, failure.error);
+      listenWhen: (previous, ExpensesState current) =>
+          current is ExpensesFailure && (previous != current),
+      listener: (context, ExpensesState state) {
+        if (state is ExpensesFailure) {
+          _showErrorSnackBar(context, state.error);
+        }
       },
       child: Scaffold(
         appBar: AppBar(
