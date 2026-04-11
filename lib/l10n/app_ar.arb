@@ -52,9 +52,9 @@
     "@today_total": {},
     "range_total": "الإجمالي ({range})",
     "@range_total": {
-      "placeholders": {
-        "range": {}
-      }
+        "placeholders": {
+            "range": {}
+        }
     },
     "transactions_count": "عدد العمليات {Count}",
     "@transactions_count": {
@@ -143,5 +143,17 @@
     "delete_all_expenses_failed": "فشل حذف جميع المصروفات. يرجى المحاولة مرة أخرى.",
     "@delete_all_expenses_failed": {},
     "something_went_wrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
-    "@something_went_wrong": {}
+    "@something_went_wrong": {},
+    "expense_details": "تفاصيل المصروف",
+    "@expense_details": {},
+    "details": "التفاصيل",
+    "@details": {},
+    "category": "الفئة",
+    "@category": {},
+    "payment_method": "طريقة الدفع",
+    "@payment_method": {},
+    "deleting_expense": "حذف المصروف...",
+    "@deleting_expense": {},
+    "confirm_delete_expense_body": "هل أنت متأكد أنك تريد حذف هذا المصروف?",
+    "@confirm_delete_expense_body": {}
 }

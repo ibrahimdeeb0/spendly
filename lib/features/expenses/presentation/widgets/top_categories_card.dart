@@ -1,6 +1,6 @@
 import 'package:spendly/general_exports.dart';
 
-import '../bloc/expenses_bloc.dart';
+import '../bloc/expenses/expenses_bloc.dart';
 
 class TopCategoriesCard extends StatelessWidget {
   const TopCategoriesCard({super.key});

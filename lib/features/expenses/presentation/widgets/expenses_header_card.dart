@@ -1,8 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:spendly/general_exports.dart';
 
-import '../bloc/expenses_bloc.dart';
-
 class ExpensesHeaderCard extends StatelessWidget {
   const ExpensesHeaderCard({super.key});
 
@@ -14,7 +12,7 @@ class ExpensesHeaderCard extends StatelessWidget {
       ({double total, int count, ExpensesRange range})
     >(
       selector: (state) {
-        final data =
+        final ExpensesViewData data =
             state.currentData ??
             ExpensesViewData.placeholder(range: state.range);
 

@@ -6,3 +6,4 @@ export 'home_content.dart';
 export 'payment_method_card.dart';
 export 'submit_button.dart';
 export 'top_categories_card.dart';
+export 'expense_details_widgets/index.dart';

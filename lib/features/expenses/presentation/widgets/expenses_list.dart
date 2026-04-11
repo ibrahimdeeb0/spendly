@@ -10,8 +10,35 @@ class ExpensesList extends StatelessWidget {
     );
   }
 
-  void _onDeleteExpense(BuildContext context, Expense expense) {
+  Future<void> _onDeleteExpense(BuildContext context, Expense expense) async {
+    final shouldDelete = await AppDialog.confirm(
+      context,
+      title: context.tr.confirm_title,
+      message: context.tr.confirm_delete_expense_body,
+      confirmText: context.tr.delete,
+      cancelText: context.tr.cancel,
+      isDanger: true,
+      icon: Icons.warning_amber_rounded,
+    );
+    if (!shouldDelete || !context.mounted) return;
+
     context.read<ExpensesBloc>().add(ExpenseDeleted(expense.id));
+  }
+
+  Future<void> _openExpenseDetails(
+    BuildContext context,
+    Expense expense,
+  ) async {
+    final result = await context.push(
+      ExpensesRoutes.details(),
+      extra: ExpenseDetailsRouteExtra(expense: expense),
+    );
+    if (!context.mounted) return;
+
+    final routeResult = ExpenseDetailsRouteResultExtra.tryParse(result);
+    if (routeResult?.wasDeleted == true) {
+      AppSnackBar.success(context, context.tr.expense_deleted_successfully);
+    }
   }
 
   @override
@@ -29,7 +56,10 @@ class ExpensesList extends StatelessWidget {
             _ExpensesListBody(
               state: state,
               onEditExpense: (expense) => _onEditExpense(context, expense),
-              onDeleteExpense: (expense) => _onDeleteExpense(context, expense),
+              onDeleteExpense: (expense) async =>
+                  _onDeleteExpense(context, expense),
+              onOpenDetails: (expense) async =>
+                  _openExpenseDetails(context, expense),
             ),
           ],
         );
@@ -43,11 +73,13 @@ class _ExpensesListBody extends StatelessWidget {
     required this.state,
     required this.onEditExpense,
     required this.onDeleteExpense,
+    required this.onOpenDetails,
   });
 
   final ExpensesState state;
   final ValueChanged<Expense> onEditExpense;
-  final ValueChanged<Expense> onDeleteExpense;
+  final Future<void> Function(Expense expense) onDeleteExpense;
+  final Future<void> Function(Expense expense) onOpenDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +96,7 @@ class _ExpensesListBody extends StatelessWidget {
         groups: (state as ExpensesLoaded).data.expensesDayGroups,
         onEditExpense: onEditExpense,
         onDeleteExpense: onDeleteExpense,
+        onOpenDetails: onOpenDetails,
       );
     }
 
@@ -76,6 +109,7 @@ class _ExpensesListBody extends StatelessWidget {
       groups: data.expensesDayGroups,
       onEditExpense: onEditExpense,
       onDeleteExpense: onDeleteExpense,
+      onOpenDetails: onOpenDetails,
     );
   }
 }
@@ -85,11 +119,13 @@ class _ExpensesDayGroups extends StatelessWidget {
     required this.groups,
     required this.onEditExpense,
     required this.onDeleteExpense,
+    required this.onOpenDetails,
   });
 
   final List<ExpensesDayGroup> groups;
   final ValueChanged<Expense> onEditExpense;
-  final ValueChanged<Expense> onDeleteExpense;
+  final Future<void> Function(Expense expense) onDeleteExpense;
+  final Future<void> Function(Expense expense) onOpenDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +138,7 @@ class _ExpensesDayGroups extends StatelessWidget {
               group: group,
               onEditExpense: onEditExpense,
               onDeleteExpense: onDeleteExpense,
+              onOpenDetails: onOpenDetails,
             ),
           ),
       ],
@@ -114,17 +151,20 @@ class _ExpensesDayGroupCard extends StatelessWidget {
     required this.group,
     required this.onEditExpense,
     required this.onDeleteExpense,
+    required this.onOpenDetails,
   });
 
   final ExpensesDayGroup group;
   final ValueChanged<Expense> onEditExpense;
-  final ValueChanged<Expense> onDeleteExpense;
+  final Future<void> Function(Expense expense) onDeleteExpense;
+  final Future<void> Function(Expense expense) onOpenDetails;
 
   @override
   Widget build(BuildContext context) {
     final title = dayTitle(context, group.day);
 
     return AppCard(
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,7 +179,8 @@ class _ExpensesDayGroupCard extends StatelessWidget {
               note: expense.note.isEmpty ? context.tr.no_note : expense.note,
               icon: expense.categoryId.toCategoryIcon(),
               onEdit: () => onEditExpense(expense),
-              onDelete: () => onDeleteExpense(expense),
+              onDelete: () async => onDeleteExpense(expense),
+              onPressDetails: () async => onOpenDetails(expense),
             ),
         ],
       ),

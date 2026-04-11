@@ -19,6 +19,16 @@ class ExpensesRouteFactory {
     return AppPageFactory.buildPage(state: state, config: _resolveEdit(state));
   }
 
+  static Page<dynamic> buildExpenseDetailsPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return AppPageFactory.buildPage(
+      state: state,
+      config: _resolveExpenseDetails(state),
+    );
+  }
+
   static RouteConfig _resolveHome() {
     return RouteConfig(
       routeType: AppRouteType.none,
@@ -43,5 +53,20 @@ class ExpensesRouteFactory {
     }
 
     return RouteConfig(child: AddExpensePage(initialExpense: extra.expense));
+  }
+
+  static RouteConfig _resolveExpenseDetails(GoRouterState state) {
+    final ExpenseDetailsRouteExtra? extra = ExpenseDetailsRouteExtra.tryParse(
+      state.extra,
+    );
+
+    if (extra == null) {
+      return RouteConfig(
+        routeType: AppRouteType.fade,
+        child: RouteNotFoundScreen(requestedLocation: state.uri.toString()),
+      );
+    }
+
+    return RouteConfig(child: ExpenseDetailsPage(expense: extra.expense));
   }
 }

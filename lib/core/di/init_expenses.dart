@@ -36,4 +36,8 @@ Future<void> initExpenses(GetIt sl) async {
   sl.registerFactory<AddExpenseBloc>(
     () => AddExpenseBloc(sl<AddExpenseUseCase>(), sl<UpdateExpenseUseCase>()),
   );
+  // Expense Details Bloc
+  sl.registerFactory<ExpenseDetailsBloc>(
+    () => ExpenseDetailsBloc(sl<DeleteExpenseUseCase>()),
+  );
 }

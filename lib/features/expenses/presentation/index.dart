@@ -1,5 +1,5 @@
 export 'bloc/index.dart';
-export 'pages/index.dart';
+export 'screens/index.dart';
 export 'routing/expenses_route_extras.dart';
 export 'routing/expenses_route_factory.dart';
 export 'routing/expenses_routes.dart';

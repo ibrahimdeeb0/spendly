@@ -101,3 +101,20 @@ final class ExpensesFailure extends ExpensesState {
   @override
   List<Object?> get props => [range, error, previousData];
 }
+
+final class ExpensesDeleteSuccess extends ExpensesState {
+  final String deletedExpenseId;
+  final ExpensesViewData? previousData;
+
+  const ExpensesDeleteSuccess({
+    required this.deletedExpenseId,
+    required super.range,
+    this.previousData,
+  });
+
+  @override
+  ExpensesViewData? get currentData => previousData;
+
+  @override
+  List<Object?> get props => [range, deletedExpenseId, previousData];
+}

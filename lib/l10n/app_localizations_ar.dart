@@ -215,4 +215,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get something_went_wrong => 'حدث خطأ ما. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get expense_details => 'تفاصيل المصروف';
+
+  @override
+  String get details => 'التفاصيل';
+
+  @override
+  String get category => 'الفئة';
+
+  @override
+  String get payment_method => 'طريقة الدفع';
+
+  @override
+  String get deleting_expense => 'حذف المصروف...';
+
+  @override
+  String get confirm_delete_expense_body =>
+      'هل أنت متأكد أنك تريد حذف هذا المصروف?';
 }
