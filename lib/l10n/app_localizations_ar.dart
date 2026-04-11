@@ -230,4 +230,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleting_expense => 'حذف المصروف...';
+
+  @override
+  String get confirm_delete_expense_body =>
+      'هل أنت متأكد أنك تريد حذف هذا المصروف?';
 }

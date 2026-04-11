@@ -153,5 +153,7 @@
     "payment_method": "طريقة الدفع",
     "@payment_method": {},
     "deleting_expense": "حذف المصروف...",
-    "@deleting_expense": {}
+    "@deleting_expense": {},
+    "confirm_delete_expense_body": "هل أنت متأكد أنك تريد حذف هذا المصروف?",
+    "@confirm_delete_expense_body": {}
 }

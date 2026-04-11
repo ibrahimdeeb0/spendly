@@ -153,5 +153,7 @@
     "payment_method": "Payment method",
     "@payment_method": {},
     "deleting_expense": "Deleting expense...",
-    "@deleting_expense": {}
+    "@deleting_expense": {},
+    "confirm_delete_expense_body": "Are you sure you want to delete this expense?",
+    "@confirm_delete_expense_body": {}
 }

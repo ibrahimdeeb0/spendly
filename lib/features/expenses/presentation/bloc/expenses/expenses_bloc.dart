@@ -81,6 +81,7 @@ class ExpensesBloc extends Bloc<ExpensesEvent, ExpensesState> {
   ) async {
     try {
       await _delete(event.id);
+      emit(_buildDeleteSuccessState(event.id));
     } catch (_) {
       emit(_buildFailureState());
     }
@@ -138,6 +139,14 @@ class ExpensesBloc extends Bloc<ExpensesEvent, ExpensesState> {
     return ExpensesFailure(
       error: const AppMessage.error(AppMessageKey.loadFailed),
       range: range ?? state.range,
+      previousData: state.currentData,
+    );
+  }
+
+  ExpensesDeleteSuccess _buildDeleteSuccessState(String expenseId) {
+    return ExpensesDeleteSuccess(
+      deletedExpenseId: expenseId,
+      range: state.range,
       previousData: state.currentData,
     );
   }

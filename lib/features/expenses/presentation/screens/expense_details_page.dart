@@ -22,7 +22,7 @@ class _ExpenseDetailsPageView extends StatelessWidget {
     return BlocConsumer<ExpenseDetailsBloc, ExpenseDetailsState>(
       listener: (context, state) {
         if (state is ExpenseDetailsDeleteSuccess) {
-          context.pop(true);
+          context.pop(const ExpenseDetailsRouteResultExtra.deleted());
         }
 
         if (state is ExpenseDetailsFailure) {
@@ -60,10 +60,39 @@ class _ExpenseDetailsPageView extends StatelessWidget {
       );
     }
 
+    if (state is ExpenseDetailsDeleting) {
+      return ExpenseDetailsView(
+        expense: state.expense,
+        isDeleting: true,
+        onEditPressed: () => _onEditPressed(context, state.expense),
+        onDeletePressed: () => _onDeletePressed(context),
+      );
+    }
+
+    if (state is ExpenseDetailsFailure) {
+      return ExpenseDetailsView(
+        expense: state.expense,
+        isDeleting: false,
+        onEditPressed: () => _onEditPressed(context, state.expense),
+        onDeletePressed: () => _onDeletePressed(context),
+      );
+    }
+
     return const SizedBox.shrink();
   }
 
-  void _onDeletePressed(BuildContext context) {
+  Future<void> _onDeletePressed(BuildContext context) async {
+    final shouldDelete = await AppDialog.confirm(
+      context,
+      title: context.tr.confirm_title,
+      message: context.tr.confirm_delete_expense_body,
+      confirmText: context.tr.delete,
+      cancelText: context.tr.cancel,
+      isDanger: true,
+      icon: Icons.warning_amber_rounded,
+    );
+    if (!shouldDelete || !context.mounted) return;
+
     context.read<ExpenseDetailsBloc>().add(const ExpenseDetailsDeletePressed());
   }
 

@@ -523,6 +523,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deleting expense...'**
   String get deleting_expense;
+
+  /// No description provided for @confirm_delete_expense_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this expense?'**
+  String get confirm_delete_expense_body;
 }
 
 class _AppLocalizationsDelegate
